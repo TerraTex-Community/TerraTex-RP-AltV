@@ -1,0 +1,19 @@
+name: tt ci
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  setup:
+    name: Checkout
+    runs-on: tt-windows
+    steps:
+      - uses: actions/checkout@v2
+      - name: write config file
+        run: |        
+            echo "${{ variables.PROD_CONFIG }}" >> .config.prod.json
+      - name: run build
+        run: |        
+            dotnet build -c Release
+      
