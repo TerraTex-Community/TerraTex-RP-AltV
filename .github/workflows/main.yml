@@ -2,7 +2,7 @@ name: tt ci
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   setup:
