@@ -10,9 +10,6 @@ jobs:
     runs-on: tt-windows
     steps:
       - uses: actions/checkout@v2
-      - name: write config file
-        run: |        
-            echo "${{ secrets.PROD_CONFIG }}" >> config.prod.json
       - name: run build
         run: |        
             dotnet build -c Release
