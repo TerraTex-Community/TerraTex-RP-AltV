@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: write config file
         run: |        
-            echo "${{ env.PROD_CONFIG }}" >> .config.prod.json
+            echo "${{ env.PROD_CONFIG }}" >> config.prod.json
       - name: run build
         run: |        
             dotnet build -c Release
