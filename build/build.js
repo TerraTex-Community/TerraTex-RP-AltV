@@ -8,6 +8,7 @@ import {spawn} from "child_process";
 // exec(`cmd.exe`);
 // get absolute path
 import path from "path";
+import {copySync} from "fs-extra/esm";
 
 var args = process.argv.slice(2).map((arg) => arg.toLowerCase());
 
@@ -51,8 +52,11 @@ async function build() {
     // // copy new files
     await fs.copyFileSync(`./../resource.toml`, `${newFilePath}/resource.toml`);
     // // move directory
-    await fs.promises.rename(`./../TerraTex_RolePlay_AltV\\bin\\${pathPart}\\net6.0`, `${newFilePath}/server`);
-    await fs.promises.rename(`./../TerraTex_RolePlay_AltV_Client\\bin\\${pathPart}\\net6.0`, `${newFilePath}/client`);
+    // await fs.promises.rename(`./../TerraTex_RolePlay_AltV\\bin\\${pathPart}\\net6.0`, `${newFilePath}/server`);
+    // await fs.promises.rename(`./../TerraTex_RolePlay_AltV_Client\\bin\\${pathPart}\\net6.0`, `${newFilePath}/client`);
+
+    copySync(`./../TerraTex_RolePlay_AltV\\bin\\${pathPart}\\net6.0`, `${newFilePath}/server`);
+    copySync(`./../TerraTex_RolePlay_AltV_Client\\bin\\${pathPart}\\net6.0`, `${newFilePath}/client`);
 
     // if (wasStarted) {
     //     await sleep(2000);

@@ -1,0 +1,7 @@
+client-type = "csharp"
+client-main = "client/TerraTex_RolePlay_AltV_Client.dll"
+client-files = [
+    "client/*"
+]
+type = "csharp"
+main = "server/TerraTex_RolePlay_AltV_Server.dll"
