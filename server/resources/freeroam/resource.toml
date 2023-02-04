@@ -1,5 +1,0 @@
-client-files = [ 'client/*' ]
-client-main = 'client/index.js'
-deps = [ 'chat' ]
-main = 'server/index.js'
-type = 'js'
