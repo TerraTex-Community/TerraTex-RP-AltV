@@ -27,7 +27,11 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="cd $(ProjectDir)..\build &amp;&amp; npm i&#xD;&#xA;cd $(ProjectDir)..\build &amp;&amp; npm run build --env=$(Configuration)" />
+    <Exec Command="cd $(ProjectDir)..\build &amp;&amp; npm run build --env=$(Configuration)" />
+  </Target>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="cd $(ProjectDir)..\build &amp;&amp; npm i" />
   </Target>
 
 </Project>
