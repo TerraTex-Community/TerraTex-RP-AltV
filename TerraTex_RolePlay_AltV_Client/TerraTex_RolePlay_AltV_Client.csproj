@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AltV.Net.Client" Version="13.0.18" />
+    <PackageReference Include="AltV.Net.Shared" Version="13.0.18" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="html\chat\" />
+    <Folder Include="utils\" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <Content Include="html\**\*">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+  </ItemGroup>
+
+</Project>

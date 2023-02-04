@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerraTex_RolePlay_AltV_Server", "TerraTex_RolePlay_AltV\TerraTex_RolePlay_AltV_Server.csproj", "{1D75479E-10F0-4996-A436-6A988C418FA8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7FB0E3C7-C797-492E-9D69-13712F5578C4} = {7FB0E3C7-C797-492E-9D69-13712F5578C4}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerraTex_RolePlay_AltV_Client", "TerraTex_RolePlay_AltV_Client\TerraTex_RolePlay_AltV_Client.csproj", "{7FB0E3C7-C797-492E-9D69-13712F5578C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{904D8265-27D8-46E1-B14D-E228FE7B0EC1}"
+	ProjectSection(SolutionItems) = preProject
+		resource.toml = resource.toml
+		readme.md = readme.md
+		todo.md = todo.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D75479E-10F0-4996-A436-6A988C418FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D75479E-10F0-4996-A436-6A988C418FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D75479E-10F0-4996-A436-6A988C418FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D75479E-10F0-4996-A436-6A988C418FA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FB0E3C7-C797-492E-9D69-13712F5578C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FB0E3C7-C797-492E-9D69-13712F5578C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FB0E3C7-C797-492E-9D69-13712F5578C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FB0E3C7-C797-492E-9D69-13712F5578C4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A769713-D704-4F82-8396-8F3B350AFD25}
+	EndGlobalSection
+EndGlobal
