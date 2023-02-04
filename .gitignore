@@ -364,4 +364,4 @@ FodyWeavers.xsd
 
 
 /build/node_modules/
-./server
+/server
