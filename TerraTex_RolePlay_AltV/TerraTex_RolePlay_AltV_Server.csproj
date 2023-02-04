@@ -23,6 +23,7 @@
     <Folder Include="CustomFactories\" />
     <Folder Include="Database\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Tasks\" />
   </ItemGroup>
 
 </Project>

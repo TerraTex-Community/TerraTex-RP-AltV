@@ -12,9 +12,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerraTex_RolePlay_AltV_Clie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Projektmappenelemente", "{904D8265-27D8-46E1-B14D-E228FE7B0EC1}"
 	ProjectSection(SolutionItems) = preProject
-		resource.toml = resource.toml
 		readme.md = readme.md
+		resource.toml = resource.toml
 		todo.md = todo.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{032005FE-55EB-47C2-BCF6-F4402518EA6D}"
+	ProjectSection(SolutionItems) = preProject
+		TextFile1.txt = TextFile1.txt
 	EndProjectSection
 EndProject
 Global
@@ -34,6 +39,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{032005FE-55EB-47C2-BCF6-F4402518EA6D} = {904D8265-27D8-46E1-B14D-E228FE7B0EC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A769713-D704-4F82-8396-8F3B350AFD25}
