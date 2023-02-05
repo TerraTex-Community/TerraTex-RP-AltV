@@ -58,18 +58,9 @@ async function build() {
     copySync(`./../TerraTex_RolePlay_AltV\\bin\\${pathPart}\\net6.0`, `${newFilePath}/server`);
     copySync(`./../TerraTex_RolePlay_AltV_Client\\bin\\${pathPart}\\net6.0`, `${newFilePath}/client`);
 
-    // if (wasStarted) {
-    //     await sleep(2000);
-    //     console.log("start server");
-    //     const absolutePath = path.resolve(`${config.serverPath}`);
-    //     console.log(absolutePath);
-    //     exec(`cd ${absolutePath} && START start.bat`);
-    //     spawn('cmd.exe', ['/c', `cd ${absolutePath} && START start.bat`], {
-    //         detached: true,
-    //         stdio: 'ignore'
-    //     }).unref();
-    // }
-    // @todo: start server - maybe in pipeline
+    if (wasStarted) {
+        await fs.promises.writeFile(`${config.serverPath}/start.command`, "start");
+    }
 }
 
 build();
