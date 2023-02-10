@@ -1,0 +1,108 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace TerraTexRolePlayAltVServer.Migrations
+{
+    /// <inheritdoc />
+    public partial class CreateUniqueKeys : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterColumn<string>(
+                name: "UUID",
+                table: "Users",
+                type: "varchar(255)",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "longtext")
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .OldAnnotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Nickname",
+                table: "Users",
+                type: "varchar(255)",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "longtext")
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .OldAnnotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Email",
+                table: "Users",
+                type: "varchar(255)",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "longtext")
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .OldAnnotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Nickname",
+                table: "Users",
+                column: "Nickname",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_UUID",
+                table: "Users",
+                column: "UUID",
+                unique: true);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropIndex(
+                name: "IX_Users_Email",
+                table: "Users");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Users_Nickname",
+                table: "Users");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Users_UUID",
+                table: "Users");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "UUID",
+                table: "Users",
+                type: "longtext",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "varchar(255)")
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .OldAnnotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Nickname",
+                table: "Users",
+                type: "longtext",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "varchar(255)")
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .OldAnnotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Email",
+                table: "Users",
+                type: "longtext",
+                nullable: false,
+                oldClrType: typeof(string),
+                oldType: "varchar(255)")
+                .Annotation("MySql:CharSet", "utf8mb4")
+                .OldAnnotation("MySql:CharSet", "utf8mb4");
+        }
+    }
+}

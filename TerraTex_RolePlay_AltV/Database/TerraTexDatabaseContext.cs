@@ -2,17 +2,29 @@
 using System.Reflection.Metadata;
 using AltV.Net;
 using Microsoft.Extensions.Logging;
+using TerraTex_RolePlay_AltV_Server.Database.Entities;
 
 namespace TerraTex_RolePlay_AltV_Server.Database;
 
 public class TerraTexDatabaseContext : DbContext 
 {
+    public DbSet<User> Users { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        String host = Alt.Core.GetServerConfig().Get("TerraTex").Get("Database").Get("host").GetString();
-        String user = Alt.Core.GetServerConfig().Get("TerraTex").Get("Database").Get("user").GetString();
-        String password = Alt.Core.GetServerConfig().Get("TerraTex").Get("Database").Get("password").GetString();
-        String databaseName = Alt.Core.GetServerConfig().Get("TerraTex").Get("Database").Get("database-name").GetString();
+        // default = local test data
+        String host = "localhost";
+        String user = "root";
+        String password = "Asdf123!";
+        String databaseName = "TerraTex_RolePlay";
+
+        if (Alt.Core != null)
+        {
+            host = Alt.Core.GetServerConfig().Get("TerraTex").Get("Database").Get("host").GetString()!;
+            user = Alt.Core.GetServerConfig().Get("TerraTex").Get("Database").Get("user").GetString()!;
+            password = Alt.Core.GetServerConfig().Get("TerraTex").Get("Database").Get("password").GetString()!;
+            databaseName = Alt.Core.GetServerConfig().Get("TerraTex").Get("Database").Get("database-name").GetString()!;
+        }
 
 
         // Replace with your connection string.
@@ -31,5 +43,34 @@ public class TerraTexDatabaseContext : DbContext
             .LogTo(Console.WriteLine, LogLevel.Information)
             // .EnableSensitiveDataLogging()
             .EnableDetailedErrors();
+    }
+
+    public override int SaveChanges()
+    {
+        AddTimestamps();
+        return base.SaveChanges();
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        AddTimestamps();
+        return base.SaveChangesAsync();
+    }
+
+    private void AddTimestamps()
+    {
+        var entities = ChangeTracker.Entries()
+            .Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+        foreach (var entity in entities)
+        {
+            var now = DateTime.UtcNow; // current datetime
+
+            if (entity.State == EntityState.Added)
+            {
+                ((BaseEntity)entity.Entity).CreatedAt = now;
+            }
+            ((BaseEntity)entity.Entity).UpdatedAt = now;
+        }
     }
 }

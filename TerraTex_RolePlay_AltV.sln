@@ -14,7 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projektmappenelemente", "Pr
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
 		resource.toml = resource.toml
-		todo.md = todo.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{032005FE-55EB-47C2-BCF6-F4402518EA6D}"
