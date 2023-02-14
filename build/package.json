@@ -8,8 +8,8 @@
   },
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
-    "fs-extra": "^11.1.0"
+    "fs-extra": "^11.1.0",
+    "sass": "^1.58.0"
   }
 }

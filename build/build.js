@@ -1,14 +1,19 @@
-import fs from "fs";
+const fs = require("fs");
+const {copySync} = require("fs-extra");
+const { exec } = require('child_process');
 
-import {execFile as exec} from "child_process";
-import {spawn} from "child_process";
+// import {execFile as exec} from "child_process";
+// import {spawn} from "child_process";
 
 
 // exec(`${config.serverPath}/altv-server.exe`);
 // exec(`cmd.exe`);
 // get absolute path
-import path from "path";
-import {copySync} from "fs-extra/esm";
+// import path from "path";
+// import {copySync} from "fs-extra/esm";
+// import {compile} from "sass";
+const {compile} = require("sass");
+const child_process = require("child_process");
 
 var args = process.argv.slice(2).map((arg) => arg.toLowerCase());
 
@@ -28,6 +33,24 @@ console.log(config);
 
 
 async function build() {
+    const options = {
+        outputStyle: "compressed",
+        sourceMap: true,
+        quietDeps: true,
+    }
+
+    // compile client
+    // await compile(`./../TerraTex_RolePlay_AltV_Client\\bin\\${pathPart}\\net6.0/html/general/Styles/bootstrap/bootstrap.scss`, options);
+    //await compile(`./../TerraTex_RolePlay_AltV_Client\\bin\\${pathPart}\\net6.0/html/custom/styles.scss`);
+
+    child_process.execSync('cd frontend && npm install',{
+        stdio:[0,1,2]
+    });
+    child_process.execSync('cd frontend && npm run build',{
+        stdio:[0,1,2]
+    });
+
+
     // check if pid file exists and process is running
     if (fs.existsSync(`${config.serverPath}/pid.txt`)) {
         await fs.promises.writeFile(`${config.serverPath}/stop.command`, "stopcmd");
@@ -58,9 +81,13 @@ async function build() {
     copySync(`./../TerraTex_RolePlay_AltV\\bin\\${pathPart}\\net6.0`, `${newFilePath}/server`);
     copySync(`./../TerraTex_RolePlay_AltV_Client\\bin\\${pathPart}\\net6.0`, `${newFilePath}/client`);
 
+    copySync(`./frontend/dist`, `${newFilePath}/client/html`);
+
     if (wasStarted) {
         await fs.promises.writeFile(`${config.serverPath}/start.command`, "start");
     }
+
+    console.log("build finished");
 }
 
 build();

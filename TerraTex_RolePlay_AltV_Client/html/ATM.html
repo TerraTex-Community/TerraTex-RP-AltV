@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>TerraTex Banking Automat</title>
+    <script src="general/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="general/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="general/Styles/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="custom/styles.css"/>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-toggleable bg-inverse navbar-light" style="position: fixed; width: 100%; z-index: 100;">
+    <a class="navbar-brand" href="#">TerraTex Banking Automat</a>
+    <ul class="navbar-nav">
+        <li class="nav-item active" id="account_link">
+            <a class="nav-link" href="#account" onClick="setContainer('account');">Konto</a>
+        </li>
+        <li class="nav-item" id="payment_link">
+            <a class="nav-link" href="#payment" onClick="setContainer('payment');">Einzahlen / Auszahlen</a>
+        </li>
+        <li class="nav-item" id="transfer_link">
+            <a class="nav-link" href="#transfer" onClick="setContainer('transfer');">Überweisungen</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav flex-right">
+        <li class="nav-item">
+            <a class="nav-link btn-danger text-white" href="#" onclick="resourceCall('closeBrowser');">Beenden</a>
+        </li>
+    </ul>
+</nav>
+<div class="container align-content-center" id="account" style="align-items: center; justify-content: center; height: -webkit-fill-available; display: flex">
+    <div class="flex-first" style="align-self: flex-start;"></div>
+    <div class="card" style="width: 600px;">
+        <table class="table table-hover">
+            <tr>
+                <td>
+                    Aktueller Kontostand
+                </td>
+                <td id="account_account"></td>
+            </tr>
+            <tr>
+                <td>Ihre Zinsen</td>
+                <td>0,0 %</td>
+            </tr>
+            <tr>
+                <td>Ihre Kreditinstitut</td>
+                <td>Bank of TerraTex</td>
+            </tr>
+            <tr>
+                <td>Offene Kreditforderungen</td>
+                <td>0,00 €</td>
+            </tr>
+        </table>
+    </div>
+    <div class="flex-last" style="align-self: flex-end;"></div>
+</div>
+<div class="container align-content-center hidden" id="payment" style="align-items: center; justify-content: center; height: -webkit-fill-available; display: flex">
+    <div class="flex-first" style="align-self: flex-start;"></div>
+    <div class="card" style="width: 600px;">
+        <form onsubmit="return false;">
+            <table class="table table-hover">
+                <tr>
+                    <td>
+                        Aktueller Kontostand
+                    </td>
+                    <td id="payment_account"></td>
+                </tr>
+                <tr>
+                    <td>Betrag</td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" min="0" step="1" class="form-control" id="payment_amount" required/>
+                            <span class="input-group-addon">,00 €</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Optionaler Buchungstext</td>
+                    <td>
+                        <input type="text" class="form-control" id="payment_text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" class="btn-success btn" onclick="pay('in');">Einzahlen</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn-success btn float-right" onclick="pay('out');">Auszahlen</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="flex-last" style="align-self: flex-end;"></div>
+</div>
+<div class="container align-content-center hidden" id="transfer" style="align-items: center; justify-content: center; height: -webkit-fill-available; display: flex">
+    <div class="flex-first" style="align-self: flex-start;"></div>
+    <div class="card" style="width: 600px;">
+        <form onsubmit="return false;">
+            <table class="table table-hover">
+                <tr>
+                    <td>Betrag</td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" min="0.00" step="0.01" class="form-control" id="transfer_amount" required/>
+                            <span class="input-group-addon"> €</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Empfänger Id oder Nickname</td>
+                    <td>
+                        <input type="text" class="form-control" id="transfer_receiver" required/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Buchungstext (optional)</td>
+                    <td>
+                        <input type="text" class="form-control" id="transfer_text"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" class="btn-success btn" onclick="transfer();">überweisen</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="flex-last" style="align-self: flex-end;"></div>
+</div>
+
+
+<script>
+    function transfer() {
+        resourceCall("transfer",
+            $("#transfer_amount").val(),
+            $("#transfer_receiver").val(),
+            $("#transfer_text").val().length < 1 ? " " : `${$("#transfer_text").val()}`);
+    }
+
+    function pay(type) {
+        resourceCall("payInPayOut",
+            type,
+            $("#payment_amount").val(),
+            $("#payment_text").val().length < 1 ? " " : `${$("#payment_text").val()}`);
+    }
+
+    function setAccount(amount) {
+        let lastMoneyString = amount.toFixed(2).replace(/\./g, ",").replace(/./g,
+            function(c, i, a) {
+                return i && c !== "," && ((a.length - i) % 3 === 0) ? `.${c}` : c;
+            });
+        lastMoneyString += " €";
+        $("#payment_account, #account_account").toggleClass("text-danger", amount < 0);
+        $("#payment_account, #account_account").toggleClass("text-success", amount > 0);
+        $("#payment_account, #account_account").text(lastMoneyString);
+        $("#transfer_amount").attr("max", amount.toFixed(2));
+    }
+
+    function setContainer(id) {
+        $(".container").toggleClass("hidden", true);
+        $(".nav-item").toggleClass("active", false);
+        $(`#${id}_link`).toggleClass("active", true);
+        $(`#${id}`).toggleClass("hidden", false);
+
+    }
+
+</script>
+
+</body>
+</html>

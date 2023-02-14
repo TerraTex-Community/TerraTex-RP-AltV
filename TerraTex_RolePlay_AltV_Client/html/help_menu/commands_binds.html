@@ -1,0 +1,488 @@
+﻿<div class="container align-content-center hidden" id="commands_binds" style="align-items: center; justify-content: center; height: -webkit-fill-available;">
+
+    <div style="height: 80px"></div>
+    <div id="accordion" style="width: 100%">
+        <div class="card">
+            <div class="card-header clickable" id="bindsHeader" data-toggle="collapse" data-target="#binds" aria-expanded="false" aria-controls="binds">
+                <h5>
+                    Standard Binds
+                </h5>
+            </div>
+
+            <div id="binds" class="collapse" aria-labelledby="bindsHeader" >
+                <table class="table">
+                    <tr>
+                        <th>Taste</th>
+                        <th>Funktion</th>
+                    </tr>
+                    <tr>
+                        <td>F1</td>
+                        <td>Öffnen des Hilfemenüs</td>
+                    </tr>
+                    <tr>
+                        <td>F2</td>
+                        <td>Binds bearbeiten / Hier kannst du auch die meisten der Standardbinds bearbeiten. Aus diesem Grund sind diese hier nicht aufgelistet.</td>
+                    </tr>
+                    <tr>
+                        <td>F3</td>
+                        <td>Einstellungen bearbeiten.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header clickable" id="generalCmdsHeader" data-toggle="collapse" data-target="#generalCmds" aria-expanded="true" aria-controls="generalCmds">
+                <h5>
+                    Allgemeine Befehle
+                </h5>
+            </div>
+
+            <div id="generalCmds" class="collapse" aria-labelledby="generalCmdsHeader">
+                <table class="table">
+                    <tr>
+                        <th>Command Syntax</th>
+                        <th>Alternativen</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                    <tr>
+                        <td>/payday</td>
+                        <td></td>
+                        <td>Zeigt die Berechnung deines letzten PayDays an.</td>
+                    </tr>
+                    <tr>
+                        <td>/jailtime</td>
+                        <td></td>
+                        <td>Zeigt die restliche Zeit im Knast an.</td>
+                    </tr>
+                    <tr>
+                        <td>/cry [text]</td>
+                        <td>c</td>
+                        <td>Schreit einen Text in den Chat.</td>
+                    </tr>
+                    <tr>
+                        <td>/quiet [text]</td>
+                        <td>q</td>
+                        <td>Flüstert einen Text in den Chat.</td>
+                    </tr>
+                    <tr>
+                        <td>/me [text]</td>
+                        <td></td>
+                        <td>Schreibt eine Nachricht in den "Tun"-Chat (sendet eine Nachricht ohne :).</td>
+                    </tr>
+                    <tr>
+                        <td>/global [text]</td>
+                        <td>g</td>
+                        <td>Sendet eine Nachricht in den Globalen Chat.</td>
+                    </tr>
+                    <tr>
+                        <td>/openchat [text]</td>
+                        <td></td>
+                        <td>Öffnet die Eingabezeile des Chattes mit dem vordefinierten Text.</td>
+                    </tr>
+                    <tr>
+                        <td>/pay [idOrName] [amount]</td>
+                        <td></td>
+                        <td>Gibt einen Spiel den angebenen Betrag vom Handgeld.</td>
+                    </tr>
+                    <tr>
+                        <td>/report</td>
+                        <td></td>
+                        <td>Öffnet einen Menü mit verschiedenen Meldefunktionen.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header clickable" id="jobCmdsHeader" data-toggle="collapse" data-target="#jobCmds" aria-expanded="true" aria-controls="jobCmds">
+                <h5>
+                    Job Befehle
+                </h5>
+            </div>
+
+            <div id="jobCmds" class="collapse" aria-labelledby="jobCmdsHeader">
+                <table class="table">
+                    <tr>
+                        <th>Command Syntax</th>
+                        <th>Alternativen</th>
+                        <th>Für Job</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                    <tr>
+                        <td>/getjob</td>
+                        <td></td>
+                        <td></td>
+                        <td>Nimmt einen neuen Job an seinem Jobpunkt an.</td>
+                    </tr>
+                    <tr>
+                        <td>/quitjob</td>
+                        <td></td>
+                        <td></td>
+                        <td>Kündigt einen Job an seinem Jobpunkt.</td>
+                    </tr>
+                    <tr>
+                        <td>/startjob</td>
+                        <td></td>
+                        <td></td>
+                        <td>Startet den Job.</td>
+                    </tr>
+                    <tr>
+                        <td>/jobhelp</td>
+                        <td></td>
+                        <td></td>
+                        <td>Zeigt eine Hilfe zu deinen aktuellen Job an.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header clickable" id="vehicleCmdsHeader" data-toggle="collapse" data-target="#vehicleCmds" aria-expanded="true" aria-controls="vehicleCmds">
+                <h5>
+                    Fahrzeug Befehle
+                </h5>
+            </div>
+
+            <div id="vehicleCmds" class="collapse" aria-labelledby="vehicleCmdsHeader">
+                <table class="table">
+                    <tr>
+                        <th>Command Syntax</th>
+                        <th>Alternativen</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                    <tr>
+                        <td>/seatbelt</td>
+                        <td></td>
+                        <td>Legt den Gurt an.</td>
+                    </tr>
+                    <tr>
+                        <td>/indicator_left</td>
+                        <td></td>
+                        <td>Schaltet den linken Blinker an. - Eine erneute Benutzung deaktiviert diesen wieder.</td>
+                    </tr>
+                    <tr>
+                        <td>/indicator_right</td>
+                        <td></td>
+                        <td>Schaltet den rechten Blinker an. - Eine erneute Benutzung deaktiviert diesen wieder.</td>
+                    </tr>
+                    <tr>
+                        <td>/indicator_warn</td>
+                        <td></td>
+                        <td>Schaltet den beide Blinker an (Warnblinkanlage). - Eine erneute Benutzung deaktiviert diesen wieder.</td>
+                    </tr>
+                    <tr>
+                        <td>/indicator_off</td>
+                        <td></td>
+                        <td>Schaltet alle Blinker aus.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header clickable" id="privateVehicleCmdsHeader" data-toggle="collapse" data-target="#privateVehicleCmds" aria-expanded="true" aria-controls="privateVehicleCmds">
+                <h5>
+                    Privat Fahrzeug Befehle
+                </h5>
+            </div>
+
+            <div id="privateVehicleCmds" class="collapse" aria-labelledby="privateVehicleCmdsHeader">
+                <table class="table">
+                    <tr>
+                        <th>Command Syntax</th>
+                        <th>Alternativen</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                    <tr>
+                        <td>/carlist</td>
+                        <td></td>
+                        <td>Zeigt eine Liste aller deiner Fahrzeuge im Chat.</td>
+                    </tr>
+                    <tr>
+                        <td>/park</td>
+                        <td></td>
+                        <td>Speichert den Parkplatz des Fahrzeugs. An dieser Stelle wird das Fahrzeug nach einen Serverneustart (alle 24h) spawnen.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-header clickable" id="factionCmdsHeader" data-toggle="collapse" data-target="#factionCmds" aria-expanded="true" aria-controls="factionCmds">
+                <h5>
+                    Fraktions Befehle
+                </h5>
+            </div>
+
+            <div id="factionCmds" class="collapse" aria-labelledby="factionCmdsHeader">
+                <table class="table">
+                    <tr>
+                        <th>Command Syntax</th>
+                        <th>Alternativen</th>
+                        <th>Nur für Fraktion</th>
+                        <th>Beschreibung</th>
+                    </tr>
+                    <tr>
+                        <td>/faction [text]</td>
+                        <td>f</td>
+                        <td></td>
+                        <td>Senden den angegebenen Text in den Fraktionschat.</td>
+                    </tr>
+                    <tr>
+                        <td>/news [text]</td>
+                        <td>n</td>
+                        <td>NEWS</td>
+                        <td>Sendet eine Nachricht in den NEWS-Chat.</td>
+                    </tr>
+                    <tr>
+                        <td>/su [idOrName] [anzahl] [text]</td>
+                        <td></td>
+                        <td>SAPD</td>
+                        <td>Gibt den Spieler die angegeben Anzahl Wantedlevel.</td>
+                    </tr>
+                    <tr>
+                        <td>/suspects</td>
+                        <td>sus</td>
+                        <td>SAPD</td>
+                        <td>Zeigt eine Liste aller Verbrecher, sortiert nach ihrem Wantedlevel an.</td>
+                    </tr>
+                    <tr>
+                        <td>/arrest [idOrName]</td>
+                        <td></td>
+                        <td>SAPD</td>
+                        <td>Knastet einen Spieler in der Nähe der Zellen ein.</td>
+                    </tr>
+                    <tr>
+                        <td>/grab [idOrName]</td>
+                        <td></td>
+                        <td>SAPD</td>
+                        <td>Zieht einen Spieler ins Auto und fesselt ihn.</td>
+                    </tr>
+                    <tr>
+                        <td>/cuff [idOrName]</td>
+                        <td></td>
+                        <td>SAPD</td>
+                        <td>Fesselt einen Spieler.</td>
+                    </tr>
+                    <tr>
+                        <td>/uncuff [idOrName]</td>
+                        <td></td>
+                        <td>SAPD</td>
+                        <td>Lässt einen gefesselten Spieler frei.</td>
+                    </tr>
+                    <tr>
+                        <td>/stvo [idOrName] [anzahl] [text]</td>
+                        <td></td>
+                        <td>SAPD</td>
+                        <td>Gibt den Spieler die angegeben Anzahl StVO-Punkte. Bei 20 Punkten werden alle Führerscheine automatisch entfernt.</td>
+                    </tr>
+                    <tr>
+                        <td>/jailtime [idOrName]</td>
+                        <td></td>
+                        <td>SAPD</td>
+                        <td>Zeigt die restliche Zeit im Knast des angebenen Spielers an.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    <div class="card">
+        <div class="card-header clickable" id="leaderCmdsHeader" data-toggle="collapse" data-target="#leaderCmds" aria-expanded="true" aria-controls="leaderCmds">
+            <h5>
+                Fraktionsleader Befehle (= Rang 6 einer Fraktion)
+            </h5>
+        </div>
+
+        <div id="leaderCmds" class="collapse" aria-labelledby="leaderCmdsHeader">
+            <table class="table">
+                <tr>
+                    <th>Command Syntax</th>
+                    <th>Alternativen</th>
+                    <th>Nur für Fraktion</th>
+                    <th>Beschreibung</th>
+                </tr>
+                <tr>
+                    <td>/invite [idOrNickname]</td>
+                    <td>inv</td>
+                    <td></td>
+                    <td>Fügt einen Spieler der Fraktion hinzu.</td>
+                </tr>
+                <tr>
+                    <td>/uninvite [idOrNickname]</td>
+                    <td>uninv</td>
+                    <td></td>
+                    <td>Entfernt den Spieler aus der Fraktion.</td>
+                </tr>
+                <tr>
+                    <td>/giverank [idOrNickname] [rangId]</td>
+                    <td>frank</td>
+                    <td></td>
+                    <td>Setzt einen Spieler auf den angegeben Rang. Rang 1-6, wobei 5 der CoLeader und 6 der Leader ist.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header clickable" id="adminCmdsHeader" data-toggle="collapse" data-target="#adminCmds" aria-expanded="true" aria-controls="adminCmds">
+            <h5>
+                Admin Befehle
+            </h5>
+        </div>
+
+        <div id="adminCmds" class="collapse" aria-labelledby="adminCmdsHeader">
+            <table class="table">
+                <tr>
+                    <th>Command Syntax</th>
+                    <th>Alternativen</th>
+                    <th>Ab Rang</th>
+                    <th>Beschreibung</th>
+                </tr>         
+
+                <!--- Supporter --->  
+                <tr>
+                    <td>/goto [nameOrId]</td>
+                    <td></td>
+                    <td>Supporter</td>
+                    <td>Teleportiert dich zu dem Spieler</td>
+                </tr> 
+                <tr>
+                    <td>/gethere [nameOrId]</td>
+                    <td></td>
+                    <td>Supporter</td>
+                    <td>Teleportiert den Spieler zu dir</td>
+                </tr>  
+                <tr>
+                    <td>/spec [nameOrId]</td>
+                    <td></td>
+                    <td>Supporter</td>
+                    <td>Startet den Spectatormodus</td>
+                </tr>  
+                <tr>
+                    <td>/unspec [nameOrId]</td>
+                    <td></td>
+                    <td>Supporter</td>
+                    <td>Beendet den Spectatormodus</td>
+                </tr>                  
+                <!--- Moderator --->
+                <tr>
+                    <td>/ban [nameOrId] [reason]</td>
+                    <td></td>
+                    <td>Moderator</td>
+                    <td>Bannt einen Spieler vom Server</td>
+                </tr>   
+                <tr>
+                    <td>/tban [nameOrId] [time] [reason]</td>
+                    <td></td>
+                    <td>Moderator</td>
+                    <td>Bannt einen Spieler vom Server für eine bestimmte Zeit. "time" ist hierbei ein Zeitstring zusammengesetzt aus jeweils einer Zahl und einer Einheit. 
+                        Beispielsweise würde "1d20h30m40s" für 1 Tag, 20 Stunden, 30 Minuten und 40 Sekunden bannen.</td>
+                </tr>  
+
+                <!--- Administrator --->
+                <tr>
+                    <td>/setfaction [nameOrId] [factionId] [rank]</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Setzt ein Spieler in eine Fraktion</td>
+                </tr>  
+                <tr>
+                    <td>/gotojob [jobid]</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Teleport zu einem Jobpunkt</td>
+                </tr>  
+                <tr>
+                    <td>/gotoc [pos] [dim=0]</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Teleport zu den angegeben Koordinaten Format: x,y,z </td>
+                </tr> 
+                <tr>
+                    <td>/pos</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Zeigt die aktuellen Koordinaten an</td>
+                </tr>  
+                <tr>
+                    <td>/veh [hashName]</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Spawned ein Fahrzeug</td>
+                </tr>  
+                <tr>
+                    <td>/vehlivery [liveryId]</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Ändert die Fahrzeug Variante (livery)</td>
+                </tr>  
+                <tr>
+                    <td>/vehcolors [color1] [color2]</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Ändert die Fahrzeug Farbe</td>
+                </tr>  
+                <tr>
+                    <td>/gpm</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Gibt den aktuellen Powermultiplikator des Fahrzeugs zurück</td>
+                </tr>  
+                <tr>
+                    <td>/spm</td>
+                    <td></td>
+                    <td>Administrator</td>
+                    <td>Setzt den Powermultiplikator des Fahrzeugs</td>
+                </tr>  
+
+                <!--- Serverleitung / Development --->
+                <tr>
+                    <td>/addapart [rentPrice] [name]</td>
+                    <td></td>
+                    <td>Serverleitung / Development</td>
+                    <td>Erstellt ein neues Apartment</td>
+                </tr>  
+                <tr>
+                    <td>/setWeather [id]</td>
+                    <td>sw</td>
+                    <td>Serverleitung / Development</td>
+                    <td>Ändert das Wetter auf die angegebene ID</td>
+                </tr>
+                <tr>
+                    <td>/gmx [timeInMinutes] [reason]</td>
+                    <td></td>
+                    <td>Serverleitung / Development</td>
+                    <td>Startet einen Serverneustart nach x Minuten aus dem angegeben Grund.</td>
+                </tr>
+                <tr>
+                    <td>/debugclick</td>
+                    <td></td>
+                    <td>Serverleitung / Development</td>
+                    <td>Startet den Debugmodus des Klicksystems.</td>
+                </tr>
+                <tr>
+                    <td>/save [info]</td>
+                    <td></td>
+                    <td>Development</td>
+                    <td>Speichert die Koordinaten in den Logs.</td>
+                </tr>
+                <tr>
+                    <td>/saveVeh [info]</td>
+                    <td></td>
+                    <td>Development</td>
+                    <td>Speichert die Fahrzeug Koordinaten in den Logs.</td>
+                </tr>
+                <tr>
+                    <td>/savem [info]</td>
+                    <td></td>
+                    <td>Development</td>
+                    <td>Speichert die Koordinaten in den Logs und erstellt einen Marker an der Position.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </div>
+    <div style="height: 40px"></div>
+</div>

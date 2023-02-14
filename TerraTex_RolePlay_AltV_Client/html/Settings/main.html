@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Settings Menu</title>
+    <script src="../general/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="../general/Scripts/bootstrap.min.js"></script>
+    <script src="account.js"></script>
+    <script src="character.js"></script>
+    <link rel="stylesheet" href="../general/Styles/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="../custom/styles.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-toggleable bg-inverse navbar-light" style="position: fixed; width: 100%; z-index: 100;">
+    <a class="navbar-brand" href="#">Einstellungen</a>
+    <ul class="navbar-nav">
+        <li class="nav-item active" id="account_link">
+            <a class="nav-link" href="#account" onClick="setContainer('account');">Account</a>
+        </li>
+        <li class="nav-item" id="character_link">
+            <a class="nav-link" href="#character" onClick="setContainer('character');">Character</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav flex-right">
+        <li class="nav-item">
+            <a class="nav-link btn-danger text-white" href="#" onclick="resourceCall('closeWindow');">Beenden</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    $(document).ready(() => {
+        addContent("account");
+        addContent("character");
+    });
+
+    function setContainer(id) {
+        $(".container").toggleClass("hidden", true);
+        $(".nav-item").toggleClass("active", false);
+        $(`#${id}_link`).toggleClass("active", true);
+        $(`#${id}`).toggleClass("hidden", false);
+    }
+
+    function addContent(name) {
+        $.ajax(name + ".html").then((data) => {
+            $("body").append(data);
+        });
+    }
+</script>
+
+</body>
+</html>

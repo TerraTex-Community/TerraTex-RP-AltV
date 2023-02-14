@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Help Menu</title>
+    <script src="../general/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="../general/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../general/Styles/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="../custom/styles.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-toggleable bg-inverse navbar-light" style="position: fixed; width: 100%; z-index: 100;">
+    <a class="navbar-brand" href="#">Informationen und Hilfe</a>
+    <ul class="navbar-nav">
+        <li class="nav-item active" id="start_link">
+            <a class="nav-link" href="#start" onClick="setContainer('start');">Start</a>
+        </li>
+        <li class="nav-item" id="commands_binds_link">
+            <a class="nav-link" href="#commands_binds" onClick="setContainer('commands_binds');">Commands & Standardbinds</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav flex-right">
+        <li class="nav-item">
+            <a class="nav-link btn-danger text-white" href="#" onclick="resourceCall('closeWindow');">Beenden</a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    $(document).ready(() => {
+        addContent("commands_binds");
+        addContent("start");
+    });
+
+    function setContainer(id) {
+        $(".container").toggleClass("hidden", true);
+        $(".nav-item").toggleClass("active", false);
+        $(`#${id}_link`).toggleClass("active", true);
+        $(`#${id}`).toggleClass("hidden", false);
+    }
+
+    function addContent(name) {
+        $.ajax(name + ".html").then((data) => {
+            $("body").append(data);
+        });
+    }
+</script>
+
+</body>
+</html>

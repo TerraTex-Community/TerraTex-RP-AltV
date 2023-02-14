@@ -1,0 +1,22 @@
+﻿<div class="container align-content-center hidden" id="character" style="align-items: center; justify-content: center; height: -webkit-fill-available;">
+
+    <div style="height: 80px"></div>
+    <div class="card" style="width: 100%">
+        <div class="card-header">
+            <h5>Character-Geschichte ändern</h5>
+        </div>
+        <div class="alert alert-success hidden" id="history-success">Deine neue Character-Geschichte wurde erfolgreich gespeichert.</div>
+        <div class="card-block">
+            <form onsubmit="return false;">
+                <div class="form-group">
+                    <label for="history">Character Geschichte</label>
+                    <textarea class="form-control" id="history" style="height:300px"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" onclick="saveNewHistory();">Geschichte speichern</button>
+            </form>
+        </div>
+    </div>
+
+    <div style="height: 40px"></div>
+</div>

@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Gebannt!</title>
+    <script src="general/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="general/Scripts/bootstrap.min.js"></script>
+    <script src="general/Scripts/handlebars-v4.0.10.js"></script>
+    <link rel="stylesheet" href="general/Styles/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="custom/styles.css"/>
+    <link rel="stylesheet" href="general/Styles/font-awesome/css/font-awesome.css"/>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-toggleable bg-inverse navbar-light" style="position: fixed;width: 100%;z-index: 100;">
+    <a class="navbar-brand" href="#" style="position: absolute">
+        <img src="custom/Images/logo.png" style="max-height: 40px;" alt=""/>
+        TerraTex
+    </a>
+    <div class="text-danger align-content-center" style="width: 100%; text-align: center"><h2>Du bist gebannt!</h2></div>
+</nav>
+<div style="height: 60px"></div>
+<div class="container-fluid">
+    <form role="form" onsubmit="return false;">
+        <div id="ban-list"></div>
+        <div class="form-control">
+            <button type="button" class="btn btn-primary" id="disconnect">Disconnect</button>
+        </div>
+    </form>
+
+    <script id="banTemplate" type="text/x-handlebars-template">
+        <div class="card banTemplate">
+            <div class="card-header clickable" data-toggle="collapse" data-target="#banBlock_{{id}}" aria-expanded="false" aria-controls="#banBlock_{{id}}">
+                <h5>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    {{title}}
+                </h5>
+            </div>
+            <div class="card-block collapse" id="banBlock_{{id}}">
+                <table class="table table-hover show-bans">
+                    <tr>
+                        <td>
+                            ReferenzID:
+                        </td>
+                        <td>
+                            {{referenceId}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gebannt via:
+                        </td>
+                        <td>
+                            {{bannedBy}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gebannt von:
+                        </td>
+                        <td>
+                            {{bannedByAdmin}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Grund:
+                        </td>
+                        <td>
+                            {{reason}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        let id = 0;
+        function addBan(title, bannedByAdmin, bannedBy, reason, referenceId) {
+            id++;
+            const source = $("#banTemplate").html();
+            const template = Handlebars.compile(source);
+            const context = {
+                title,
+                id,
+                bannedByAdmin,
+                bannedBy,
+                reason,
+                referenceId
+            };
+            const html = template(context);
+            $("#ban-list").append(html);
+        }
+        $(document).ready(function() {
+            resourceCall("onFinishLoading");
+
+            $("#disconnect").click(() => {
+                resourceCall("onClickDisconnect");
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

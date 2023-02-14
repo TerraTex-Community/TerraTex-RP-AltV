@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="background-color: transparent">
+<head>
+    <meta charset="utf-8"/>
+    <title>PlayerList</title>
+    <script src="general/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="general/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="general/Styles/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="custom/styles.css"/>
+</head>
+<body class="body-dark-transparent">
+
+<table class="table table-hover playerlist">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nickname</th>
+        <th>Character</th>
+        <th>Level</th>
+        <th>Spielzeit</th>
+        <th>Ping</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<script>
+    let isUpdateInProcess = false;
+    let updatedEntries = [];
+
+    function clearPlayerList() {
+        $("tbody").html("");
+    }
+
+    function startUpdate(data) {
+        updatedEntries = [];
+        isUpdateInProcess = true;
+
+        const playerDataParsed = JSON.parse(data);
+
+        for (const player of playerDataParsed.data) {
+            const isLocalPlayer = parseInt(player.id) === data.ownUser;
+            let time = player.playtime;
+
+            if (time !== "-") {
+                const hours = Math.floor(time / 60);
+                const minutes = time - hours * 60;
+                time = hours + ":" + (minutes < 10 ? `0${minutes}` : minutes);
+            }
+
+            updateUser(player.id, player.nickname, player.name, player.level, time, player.ping, isLocalPlayer);
+        }
+        stopUpdate();
+
+        resourceCall("updateDone");
+    }
+
+    function stopUpdate() {
+        $("tbody tr").each(function() {
+            let id = $(this).attr("id");
+
+            if (updatedEntries.indexOf(parseInt(id)) === -1) {
+                $(`tbody tr#${id}`).remove();
+            }
+        });
+
+        updatedEntries = [];
+        isUpdateInProcess = false;
+    }
+
+    function updateUser(id, nickname, character, level, time, ping, isOwnPlayer) {
+        if ($(`tbody tr#${id}`).length) {
+            $(`tbody tr#${id}`).html(
+                `<td>${id}</td><td>${nickname}</td><td>${character}</td>
+                <td>${level}</td><td>${time} h</td><td>${ping} ms</td>`
+            );
+        } else {
+            addUser(id, nickname, character, level, time, ping, isOwnPlayer);
+        }
+        updatedEntries.push(parseInt(id));
+    }
+
+    function addUser(id, nickname, character, level, time, ping, isOwnPlayer) {
+        let classText = "";
+        if (isOwnPlayer) {
+            classText = "class='body-dark-light-transparent'";
+            $("tbody").prepend(
+                `<tr ${classText} id="${id}"><td>${id}</td><td>${nickname}</td><td>${character}</td>
+                <td>${level}</td><td>${time} h</td><td>${ping} ms</td></tr>`
+            );
+        } else {
+            $("tbody").append(
+                `<tr ${classText} id="${id}"><td>${id}</td><td>${nickname}</td><td>${character}</td><td>${level}</td><td>${time} h</td><td>${ping} ms</td></tr>`
+            );
+        }
+    }
+</script>
+
+</body>
+</html>

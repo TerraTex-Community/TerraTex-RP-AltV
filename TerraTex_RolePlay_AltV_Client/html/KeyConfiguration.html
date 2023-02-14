@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Key Binding & Konfiguration</title>
+    <script src="general/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="general/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="general/Styles/bootstrap/bootstrap.css"/>
+    <link rel="stylesheet" href="custom/styles.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="alert alert-info">
+        Der Keybinder unterstützt nicht Strg, Alt oder Shift. <br />
+        Weder als Zusatzvariante noch als generelle Belegung.<br/>
+        Die Tasten F1-F4 sind für TerraTex Interne Belegungen reserviert.
+    </div>
+    <div class="card">
+        <div class="card-header font-weight-bold">
+            TerraTex - Bindings
+        </div>
+        <table class="table table-hover">
+            <tr>
+                <th class="w-25">
+                    Taste/n
+                </th>
+                <th class="w-50">
+                    Funktion
+                </th>
+                <th class="w-25">
+                    Bearbeitung
+                </th>
+            </tr>
+            <tr>
+                <td data-key-value="none" data-key-modifier="0">~no~Key~defined~</td>
+                <td data-function-name="ShowCursor">Zeige Cursor</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-primary changekey">Taste/n Ändern</button>
+                        <button class="btn btn-danger resetbtn" data-default-key-value="88" data-default-key="X">Zurücksetzen</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td data-key-value="none" data-key-modifier="0">~no~Key~defined~</td>
+                <td data-function-name="ToggleEngine">Motor An/Aus</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-primary changekey">Taste/n Ändern</button>
+                        <button class="btn btn-danger resetbtn" data-default-key-value="77" data-default-key="M">Zurücksetzen</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="card">
+        <div class="card-header font-weight-bold">
+            Eigene Binds
+        </div>
+        <table class="table table-hover">
+            <tr>
+                <th class="w-25">
+                    Taste/n
+                </th>
+                <th class="w-50">
+                    Chateingabe
+                </th>
+                <th class="w-25">
+                    Bearbeitung
+                </th>
+            </tr>
+            <tbody id="customBinds">
+            </tbody>
+        </table>
+        <button class="btn btn-success" id="addNewRow"> Neuen Bind anlegen </button>
+    </div>
+    <div class="btn-group pftr">
+        <button class="btn btn-danger btn-border-white" id="close"> Beenden / Abbrechen </button>
+        <button class="btn btn-success btn-border-white" id="save"> Speichern </button>
+    </div>
+
+    <script>
+        let waitForKey = false;
+        let inputRow = false;
+
+        function clearEntries() {
+            $("#customBinds").html("");
+        }
+
+        function setFunctionalKey(name, key, keyValue) {
+            const field = $(`[data-function-name=${name}]`).parent().find("td:first-child");
+            field.attr("data-key-value", keyValue);
+            field.text(key);
+        }
+
+        function addBinding(content, key, keyValue) {
+            // ReSharper disable once StringConcatenationToTemplateString
+            const row = '<tr>' +
+                '<td data-key-value="' + keyValue + '" data-key-modifier="0">' + key + '</td>' +
+                '<td>' + content+ '</td>' +
+                '<td>' +
+                '<div class="btn-group btn-group-sm">' +
+                '<button class="btn btn-primary changekey">Taste Ändern</button>' +
+                '<button class="btn btn-info changeText">Text Ändern</button>' +
+                '<button class="btn btn-danger deleteRow">Löschen</button>' +
+                '</div>' +
+                '</td>' +
+                '</tr>';
+
+            $("#customBinds").append(row);
+        }
+
+        function setNewKey(key, keyValue) {
+            $("button").show();
+            const field = waitForKey.find("td:first-child");
+            field.attr("data-key-value", keyValue);
+            field.html(key);
+            waitForKey = false;
+        }
+
+        $(document).ready(function () {
+
+            $("#addNewRow").click(function() {
+                const row = '<tr>' +
+                    '<td data-key-value="none" data-key-modifier="0">~no~Key~defined~</td>' +
+                    '<td>~no~Text~defined~</td>' +
+                    '<td>' +
+                    '<div class="btn-group btn-group-sm">' +
+                    '<button class="btn btn-primary changekey">Taste Ändern</button>' +
+                    '<button class="btn btn-info changeText">Text Ändern</button>' +
+                    '<button class="btn btn-danger deleteRow">Löschen</button>' +
+                    '</div>' +
+                    '</td>' +
+                    '</tr>';
+
+                $("#customBinds").append(row);
+
+            });
+
+            $("html").on("click", ".deleteRow", function () {
+                $(this).parent().parent().parent().remove();
+            });
+
+            $("html").on("click", ".changeText", function () {
+                $("button").hide();
+                $(".modalbutton_ok, .modalbutton_cancel").show();
+                inputRow = $(this).parent().parent().parent();
+
+                $("#modal_content").text(inputRow.find("td:nth-child(2)").text());
+                $('#inputModal').modal('show');
+
+            });
+
+            $("html").on("click", ".modalbutton_cancel", function () {
+                $("button").show();
+                $('#inputModal').modal('hide');
+            });
+
+            $("html").on("click", ".modalbutton_ok", function () {
+                inputRow.find("td:nth-child(2)").text($("#modal_content").val());
+                inputRow = false;
+                $("button").show();
+                $('#inputModal').modal('hide');
+            });
+
+            $("html").on("click", ".changekey", function() {
+                $("button").hide();
+                $(this).parent().parent().parent().find("td:first-child")
+                    .html("<span class='text-danger font-weight-bold'> ~~ Drücke eine Taste ~~</span>");
+
+                waitForKey = $(this).parent().parent().parent();
+
+                resourceCall("waitForKey");
+            });
+
+            $("html").on("click", ".resetbtn", function() {
+                const keyValue = $(this).attr("data-default-key-value");
+                const keyName = $(this).attr("data-default-key");
+
+                const keyField = $(this).parent().parent().parent().find("td:first-child");
+                keyField.attr("data-key-value", keyValue);
+                keyField.text(keyName);
+            });
+
+            $("#close").click(function() {
+                resourceCall("closeWindow");
+            });
+
+            $("#save").click(function() {
+                const showCursor = $("[data-function-name=ShowCursor]").parent().find("td:first-child");
+                const toggleEngine = $("[data-function-name=ToggleEngine]").parent().find("td:first-child");
+
+                const keyDefinition = {
+                    functionKeys: {
+                        ShowCursor: {
+                            key: showCursor.text(),
+                            keyValue: showCursor.attr("data-key-value")
+                        },
+                        ToggleEngine: {
+                            key: toggleEngine.text(),
+                            keyValue: toggleEngine.attr("data-key-value")
+                        }
+                    },
+                    customBindings: [
+                    ]
+                };
+
+                $("#customBinds tr").each(function() {
+                    const definition = {
+                        key: $(this).find("td:first-child").text(),
+                        keyValue: $(this).find("td:first-child").attr("data-key-value"),
+                        content: $(this).find("td:nth-child(2)").text()
+                    };
+
+                    keyDefinition.customBindings.push(definition);
+
+                });
+
+                const jsondata = JSON.stringify(keyDefinition);
+                resourceCall("save", jsondata);
+            });
+            
+        });
+    </script>
+</div>
+    
+<div class="modal fade" id="inputModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Text / Befehlseingabe</h5>
+            </div>
+            <div class="modal-body">
+                <p>Gebe den Text oder Befehl so ein, wie du ihn in der Chatbox eingeben würdest.</p>
+                
+                <textarea id="modal_content" style="width: 100%"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modalbutton_ok btn btn-primary">übernehmen</button>
+                <button type="button" class="modalbutton_cancel btn btn-danger">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

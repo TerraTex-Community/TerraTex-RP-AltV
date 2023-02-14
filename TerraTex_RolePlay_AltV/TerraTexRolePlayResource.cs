@@ -15,6 +15,7 @@ namespace TerraTex_RolePlay_AltV_Server
 {
     public class TerraTexRolePlayResource: AsyncResource
     {
+
         public override void OnStart()
         {
             Process currentProcess = Process.GetCurrentProcess();
@@ -31,8 +32,8 @@ namespace TerraTex_RolePlay_AltV_Server
             Alt.Core.RegisterCustomCommands();
             Console.WriteLine("TerraTex Server started");
 
-            using var db = new TerraTexDatabaseContext();
-            db.Database.Migrate();
+            Globals.TTDatabase = new TerraTexDatabaseContext();
+            Globals.TTDatabase.Database.Migrate();
 
         }
 

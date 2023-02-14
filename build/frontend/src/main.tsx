@@ -1,24 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.css'
+import './index.scss'
 import {createHashRouter, RouterProvider} from "react-router-dom";
-import App2 from "./App2";
+import Register from "./UIs/Register";
 
 const router = createHashRouter([
     {
-        path: "/",
-        element: <App />
-    },
-    {
-        path: "/test",
-        element: <App2 />
+        path: "/register",
+        element: <Register />
     },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    {/*<App />*/}
       <RouterProvider router={router} />
   </React.StrictMode>,
 )

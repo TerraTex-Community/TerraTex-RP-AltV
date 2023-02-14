@@ -1,0 +1,156 @@
+@function rgba($r, $g, $b, $a) {
+    @return unquote('rgba(#{$r}, #{$g}, #{$b}, #{$a})');
+}
+
+textarea {
+    height: 150px;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+.register-image-logo {
+    text-align: right;
+    height: 100px;
+    float: left;
+    margin-right: 10px;
+}
+
+.clear {
+    clear: both;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.mleft {
+    margin-left: auto;
+}
+
+.mtop {
+    margin-top: auto;
+}
+
+.pftr {
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+.btn-border-white {
+    border-width: 1px;
+    border-color: #ffffff !important;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-right {
+    margin-left: auto;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+#ban-list  {
+    .card-block {
+        padding: 0;
+    }
+}
+
+.card-header {
+    &[aria-expanded=true] {
+        .fa-caret-down {
+            display: inline;
+        }
+
+        .fa-caret-right {
+            display: none;
+        }
+    }
+
+    &[aria-expanded=false] {
+        .fa-caret-down {
+            display: none;
+        }
+
+        .fa-caret-right {
+            display: inline;
+        }
+    }
+}
+
+table {
+    &.collapse {
+        &.show {
+            display: table;
+        }
+    }
+
+    &.show-bans {
+        margin-bottom: 0;
+
+        td:first-child {
+            width: 150px;
+            font-weight: bold;
+        }
+    }
+}
+
+
+.body-dark-transparent {
+    background-color: rgba(0, 0, 0, .5);
+
+    td, th {
+        color: rgb(255, 255, 255);
+        border-top: 1px solid rgba(100, 100, 100, .5);
+    }
+}
+.body-dark-light-transparent {
+    background-color: rgba(150, 150, 150, .5);
+}
+
+.playerlist {
+    td, th {
+        &:nth-child(1) {
+            width: 100px;
+            text-align: right;
+        }
+
+        &:nth-child(4) {
+            width: 100px;
+            text-align: right;
+        }
+
+        &:nth-child(5) {
+            width: 150px;
+            text-align: right;
+        }
+        &:nth-child(6) {
+            width: 100px;
+            text-align: right;
+        }
+    }
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+#commands_binds {
+    tr > td:first-child {
+        white-space: nowrap;
+    }
+
+    th {
+        white-space: nowrap;
+    }
+}

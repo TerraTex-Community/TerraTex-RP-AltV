@@ -24,9 +24,10 @@
   <ItemGroup>
     <Folder Include="CustomFactories\" />
     <Folder Include="Database\Entities\" />
-    <Folder Include="Lib\User\" />
     <Folder Include="Migrations\" />
     <Folder Include="Tasks\" />
+    <Folder Include="Utils\JsonConverter\" />
+    <Folder Include="Utils\Helper\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
