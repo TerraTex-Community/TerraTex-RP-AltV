@@ -3,7 +3,7 @@ using AltV.Net;
 using AltV.Net.Elements.Entities;
 using TerraTex_RolePlay_AltV_Server.Utils.Helper;
 
-namespace TerraTex_RolePlay_AltV_Server.Lib.User.Registration;
+namespace TerraTex_RolePlay_AltV_Server.Lib.User.Authentication;
 
 public class Registration : IScript
 {
@@ -15,9 +15,6 @@ public class Registration : IScript
     async void SubmitRegistration(IPlayer player, string jsonRegistrationData)
     {
         RegistrationData data = JsonSerializer.Deserialize<RegistrationData>(jsonRegistrationData)!;
-
-
-        //Globals.TTDatabase.Users.AddAsync()
 
         string salt = PasswordHelper.GenerateSalt();
         string password = PasswordHelper.Hash(data.Password, salt);

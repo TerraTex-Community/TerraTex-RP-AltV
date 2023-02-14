@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using TerraTex_RolePlay_AltV_Server.Utils.JsonConverter;
 
-namespace TerraTex_RolePlay_AltV_Server.Lib.User.Registration;
+namespace TerraTex_RolePlay_AltV_Server.Lib.User.Authentication;
 
 public class RegistrationData
 {

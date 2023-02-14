@@ -6,11 +6,11 @@ using TerraTex_RolePlay_AltV_Client.utils;
 namespace TerraTex_RolePlay_AltV_Client.User;
 
 [TerraTexClientInit()]
-public class Register
+public class Login
 {
     private IWebView view;
 
-    public Register()
+    public Login()
     {
         Alt.OnServer("Connect:Register", CreateRegistrationWindow);
 
@@ -18,23 +18,9 @@ public class Register
 
     private void CreateRegistrationWindow()
     {
-        Vector2 resolution = Alt.Core.ScreenResolution;
-
-        float width = (float)800;
-        if (resolution.X <= 800) width = resolution.X;
-
-        float height = (float)750;
-        if (resolution.Y <= 750) height = resolution.Y;
-
-        float x = (float) (resolution.X - width) / 2;
-        float y = (float) (resolution.Y - height) / 2;
-
         view = Alt.CreateWebView(
             url: "http://resource/client/html/index.html#/register"
-            // pos: new Vector2(x, y),
-            // size: new Vector2(width, height)
         );
-
         
         Alt.GameControlsEnabled = false;
         Alt.Core.ShowCursor(true);

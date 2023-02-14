@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="html\chat\" />
-    <Folder Include="User\" />
     <Folder Include="utils\" />
   </ItemGroup>
 

@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom/client'
 import './index.scss'
 import {createHashRouter, RouterProvider} from "react-router-dom";
 import Register from "./UIs/Register";
+import Login from "./UIs/Login";
 
 const router = createHashRouter([
     {
         path: "/register",
         element: <Register />
+    },
+    {
+        path: "/login",
+        element: <Login />
     },
 ]);
 
