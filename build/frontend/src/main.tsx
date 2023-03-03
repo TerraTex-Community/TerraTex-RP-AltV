@@ -4,6 +4,7 @@ import './index.scss'
 import {createHashRouter, RouterProvider} from "react-router-dom";
 import Register from "./UIs/Register";
 import Login from "./UIs/Login";
+import PasswordForgotten from "./UIs/PasswordForgotten";
 
 const router = createHashRouter([
     {
@@ -14,6 +15,10 @@ const router = createHashRouter([
         path: "/login",
         element: <Login />
     },
+    {
+        path: "/PasswordForgotten",
+        element: <PasswordForgotten />
+    }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

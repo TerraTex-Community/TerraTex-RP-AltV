@@ -24,7 +24,9 @@
   <ItemGroup>
     <Folder Include="CustomFactories\" />
     <Folder Include="Database\Entities\" />
+    <Folder Include="Lib\System\" />
     <Folder Include="Migrations\" />
+    <Folder Include="Helper\" />
     <Folder Include="Tasks\" />
     <Folder Include="Utils\JsonConverter\" />
     <Folder Include="Utils\Helper\" />
