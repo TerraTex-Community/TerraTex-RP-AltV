@@ -89,7 +89,7 @@ public class Register
 
     private void SendNickname()
     {
-        // @todo: set is dev server in future
+        // @todo: set is dev server in future 
         _view.Emit("login:nickname", Alt.LocalPlayer.Name);
     }
 }

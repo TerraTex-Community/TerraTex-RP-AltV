@@ -20,13 +20,17 @@ public class Login : IScript
 
     private async void ChangePassword(TTPlayer user, string password, string code)
     {
+        Database.Entities.User? dbUser = await Globals.TTDatabase!.Users.Where(dbUser => dbUser.Nickname == user.Name).FirstOrDefaultAsync();
+
         if (ConfirmationSystem.CheckCodeAndRemoveOnSuccess(user, code))
         {
             string salt = PasswordHelper.GenerateSalt();
             string passwordHash = PasswordHelper.Hash(password, salt);
 
-            user.DbUser!.Salt = salt;
-            user.DbUser!.Password = passwordHash;
+            // @FIXME: DbUser is not valid here as it is only set AFTER Login
+
+            dbUser!.Salt = salt;
+            dbUser.Password = passwordHash;
 
             // @todo: is this needed after adding #31 ? do we need also to mark update? 
             await Globals.TTDatabase!.SaveChangesAsync();
@@ -39,9 +43,11 @@ public class Login : IScript
         }
     }
 
-    private void SendConfirmationCode(TTPlayer user)
+    private async void SendConfirmationCode(TTPlayer user)
     {
-        ConfirmationSystem.SendNewGeneratedKey(user, user.DbUser!.Email);
+        Database.Entities.User? dbUser = await Globals.TTDatabase!.Users.Where(dbUser => dbUser.Nickname == user.Name).FirstOrDefaultAsync();
+
+        ConfirmationSystem.SendNewGeneratedKey(user, dbUser!.Email);
     }
 
     private async void SubmitLogin(TTPlayer player, string passwordTry)

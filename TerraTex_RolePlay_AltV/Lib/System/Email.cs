@@ -33,16 +33,27 @@ public class Email
         var mailConfig = Alt.Core.GetServerConfig().Get("TerraTex").Get("Email");
 
         Enabled = mailConfig.Get("enabled").GetBoolean().GetValueOrDefault(false);
-        Host = mailConfig.Get("host").GetString()!;
-        Port = mailConfig.Get("port").GetInt()!.Value;
-        User = mailConfig.Get("user").GetString()!;
-        Password = mailConfig.Get("password").GetString()!;
-        EnableSsl = mailConfig.Get("enableSSL").GetBoolean().GetValueOrDefault(true);
-        FromEmail = mailConfig.Get("fromEmail").GetString()!;
-        FromName = mailConfig.Get("fromName").GetString()!;
+        if (Enabled)
+        {
+            Host = mailConfig.Get("host").GetString()!;
+            Port = mailConfig.Get("port").GetInt()!.Value;
+            User = mailConfig.Get("user").GetString()!;
+            Password = mailConfig.Get("password").GetString()!;
+            EnableSsl = mailConfig.Get("enableSSL").GetBoolean().GetValueOrDefault(true);
+            FromEmail = mailConfig.Get("fromEmail").GetString()!;
+            FromName = mailConfig.Get("fromName").GetString()!;
+        }
+
+        Console.WriteLine(Host);
+        Console.WriteLine(Port);
+        Console.WriteLine(User);
+        Console.WriteLine(Password);
+        Console.WriteLine(EnableSsl);
+        Console.WriteLine(FromEmail);
+        Console.WriteLine(FromName);
     }
 
-    public void Send()
+    public async void Send()
     {
         if (Enabled)
         {
@@ -64,10 +75,18 @@ public class Email
                     Body = Text,
                     IsBodyHtml = true,
                     BodyEncoding = Encoding.UTF8,
-                    DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+                    // DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
                 };
 
-            client.Send(mm);
+            try
+            {
+                client.Send(mm);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex);
+            }
         }
         else
         {
