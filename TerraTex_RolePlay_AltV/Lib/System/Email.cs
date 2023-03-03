@@ -43,14 +43,6 @@ public class Email
             FromEmail = mailConfig.Get("fromEmail").GetString()!;
             FromName = mailConfig.Get("fromName").GetString()!;
         }
-
-        Console.WriteLine(Host);
-        Console.WriteLine(Port);
-        Console.WriteLine(User);
-        Console.WriteLine(Password);
-        Console.WriteLine(EnableSsl);
-        Console.WriteLine(FromEmail);
-        Console.WriteLine(FromName);
     }
 
     public async void Send()
