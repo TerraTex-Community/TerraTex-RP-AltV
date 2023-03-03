@@ -3,12 +3,22 @@ import "./Login.scss";
 import logo from "../assets/logo.png";
 import {Alert, Button, FloatingLabel, Form} from "react-bootstrap";
 import {AltV} from "../services/alt.service";
+import {useLocation, useNavigate} from "react-router";
 
 function Login() {
     const [isDevServer, setIsDevServer] = useState(false);
+    const [isPasswordChanged, setIsPasswordChanged] = useState(false);
     const [nickname, setNickname] = useState("placeholder");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    if (location.state?.passwordChanged && !isPasswordChanged) {
+        setIsPasswordChanged(true);
+    }
+
+    console.log("isPasswordCHanged: ", isPasswordChanged)
 
     if (nickname === "placeholder") {
         AltV.on("login:nickname", (nickname: string) => setNickname(nickname));
@@ -29,6 +39,10 @@ function Login() {
         <div className="LoginForm p-3">
             <Form onSubmit={e => onSubmit(e)}>
                 <div>
+                    <Alert variant="success" hidden={!isPasswordChanged}>
+                        Dein Passwort wurde erfolgreich geändert. Bitte logge dich erneut ein.
+                    </Alert>
+
                     <Alert variant="warning">
                         Das Script ist derzeit noch in einem Early Access Alpha Status.
                         Viele Features fehlen noch oder können fehlerhaft sein. Weitere Infos dazu gibt
@@ -68,6 +82,9 @@ function Login() {
                     <Button className="me-2" variant="success" type="submit">Login</Button>
                     <Button variant="success" type="submit" hidden={true}>
                         Login & Aktiviere Autologin auf diesem PC
+                    </Button>
+                    <Button variant="primary" type="button" onClick={() => navigate("/PasswordForgotten")}>
+                        Passwort vergessen?
                     </Button>
                 </div>
 

@@ -13,7 +13,23 @@ public class PlayerConnect : IScript
     {
         Database.Entities.User? user = await Globals.TTDatabase!.Users.Where(user => user.Nickname == player.Name).FirstOrDefaultAsync();
 
-        player.Emit(user == null ? "Connect:Register" : "Connect:Login");
+        if (user == null)
+        {
+            player.Emit("Connect:Register");
+        }
+        else
+        {
+            player.Emit("Connect:Login", MaskPlayerEmail(user.Email));
+        }
+    }
+
+    private string MaskPlayerEmail(string email)
+    {
+        string[] parts = email.Split("@");
+
+        string firstPart = parts[0].Substring(0, 2) + "***" + parts[0].Substring(parts[0].Length - 2);
+
+        return $"{firstPart}@{parts[1]}";
     }
 
     [ScriptEvent(ScriptEventType.PlayerBeforeConnect)]

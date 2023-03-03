@@ -8,17 +8,21 @@ namespace TerraTex_RolePlay_AltV_Client.User;
 [TerraTexClientInit()]
 public class Register
 {
-    private IWebView view;
+    private IWebView _view;
+
+    private string _maskedEmail;
 
     public Register()
     {
-        Alt.OnServer("Connect:Login", CreateLoginWindow);
+        Alt.OnServer<string>("Connect:Login", CreateLoginWindow);
 
     }
 
-    private void CreateLoginWindow()
+    private void CreateLoginWindow(string maskedEmail)
     {
-        view = Alt.CreateWebView(
+        _maskedEmail = maskedEmail;
+
+        _view = Alt.CreateWebView(
             url: "http://resource/client/html/index.html#/login"
         );
 
@@ -26,27 +30,55 @@ public class Register
         Alt.GameControlsEnabled = false;
         Alt.Core.ShowCursor(true);
 
-        view.Visible = true;
-        view.Focused = true;
-        view.Focus();
+        _view.Visible = true;
+        _view.Focused = true;
+        _view.Focus();
 
-        view.On("login:ready", SendNickname);
-        view.On<string>("login:submit", SubmitLogin);
+        _view.On("login:ready", SendNickname);
+        _view.On<string>("login:submit", SubmitLogin);
+
+        _view.On("login:getMail", GetMaskedEmail);
+
+        _view.On<string, string>("login:changePassword", TryChangePassword);
+        _view.On("login:sendConfirmCode", SendConfirmCode);
 
         Alt.OnServer<bool>("login:result", ReceiveLoginResult);
+        Alt.OnServer<bool>("login:passwordForgottenResult", ReceivePasswordForgottenResult);
+    }
+
+    private void ReceivePasswordForgottenResult(bool result)
+    {
+        _view.Emit("login:passwordForgottenResult", result);
+    }
+
+    private void SendConfirmCode()
+    {
+        Alt.EmitServer("login:sendConfirmationCode");
+    }
+
+    private void TryChangePassword(string newPassword, string confirmCode)
+    {
+        Alt.EmitServer("login:TryChangePassword", newPassword, confirmCode);
+    }
+
+    private void GetMaskedEmail()
+    {
+        _view.Emit("login:email", _maskedEmail);
     }
 
     private void ReceiveLoginResult(bool result)
     {
         if (result)
         {
-            view.Unfocus();
-            view.Visible = false;
-            view.Remove();
+            Alt.GameControlsEnabled = true;
+            Alt.Core.ShowCursor(false);
+            _view.Unfocus();
+            _view.Visible = false;
+            _view.Remove();
         }
         else
         {
-            view.Emit("login:error");
+            _view.Emit("login:error");
         }
     }
 
@@ -57,7 +89,7 @@ public class Register
 
     private void SendNickname()
     {
-        // @todo: set is dev server in future
-        view.Emit("login:nickname", Alt.LocalPlayer.Name);
+        // @todo: set is dev server in future 
+        _view.Emit("login:nickname", Alt.LocalPlayer.Name);
     }
 }

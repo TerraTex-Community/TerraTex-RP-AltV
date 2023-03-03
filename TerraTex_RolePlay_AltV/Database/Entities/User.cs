@@ -21,7 +21,6 @@ public class User : BaseEntity
     [Required]
     public string Nickname { get; set; }
 
-
     [Required]
     public string Password { get; set; }
     [Required]
@@ -39,6 +38,11 @@ public class User : BaseEntity
 
     public int AdminLevel { get; set; } = 0;
     public int DevLevel { get; set; } = 0;
+
+    public ulong? LastHardwareIdExHash { get; set; }
+    public ulong? LastHardwareIdHash { get; set; }
+    public ulong? LastSocialClubId { get; set; }
+    public string? LastIp { get; set; }
 
 }
 #pragma warning restore CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Erwägen Sie die Deklaration als Nullable.
