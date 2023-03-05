@@ -6,6 +6,8 @@ using AltV.Net.Shared.Elements.Data;
 using CustomCommandsSystem.Integration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
+using Quartz.Impl;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Database;
 using TerraTex_RolePlay_AltV_Server.Tasks;
@@ -16,14 +18,14 @@ namespace TerraTex_RolePlay_AltV_Server
     public class TerraTexRolePlayResource: AsyncResource
     {
 
-        public override void OnStart()
+        public override async void OnStart()
         {
             Process currentProcess = Process.GetCurrentProcess();
             if (File.Exists("pid.txt"))
             {
                 File.Delete("pid.txt");
             }
-            File.WriteAllText("pid.txt", currentProcess.Id.ToString());
+            await File.WriteAllTextAsync("pid.txt", currentProcess.Id.ToString());
 
             // Start Restart Checker Task
             new RestartChecker();
@@ -35,10 +37,28 @@ namespace TerraTex_RolePlay_AltV_Server
             Globals.TTDatabase = new TerraTexDatabaseContext();
             Globals.TTDatabase.Database.Migrate();
 
+            await Scheduler();
+
+            DatabaseSaveJob.Init();
         }
 
-        public override void OnStop()
+        private async Task<bool> Scheduler()
         {
+            // init scheduler
+            Globals.Factory = new StdSchedulerFactory();
+            Globals.Scheduler = await Globals.Factory.GetScheduler();
+
+            await Globals.Scheduler.Start();
+
+            return true;
+        }
+
+        public override async void OnStop()
+        {
+            
+            await Globals.Scheduler!.Shutdown();
+            await Globals.TTDatabase!.SaveChangesAsync(true);
+
             Console.WriteLine("TerraTex Server Stopped");
 
             File.Delete("pid.txt");
