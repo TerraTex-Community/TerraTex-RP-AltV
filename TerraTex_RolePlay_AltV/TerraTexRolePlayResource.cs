@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Reflection.Emit;
 using AltV.Net;
 using AltV.Net.Async;
 using AltV.Net.Elements.Entities;
@@ -6,12 +7,14 @@ using AltV.Net.Shared.Elements.Data;
 using CustomCommandsSystem.Integration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using NLog;
+using NLog.Layouts;
+using NLog.Targets;
 using Quartz;
 using Quartz.Impl;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Database;
 using TerraTex_RolePlay_AltV_Server.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TerraTex_RolePlay_AltV_Server
 {
@@ -20,16 +23,15 @@ namespace TerraTex_RolePlay_AltV_Server
 
         public override async void OnStart()
         {
+            LoggerConfiguration.ConfigureLogger();
+
             Process currentProcess = Process.GetCurrentProcess();
             if (File.Exists("pid.txt"))
             {
                 File.Delete("pid.txt");
             }
             await File.WriteAllTextAsync("pid.txt", currentProcess.Id.ToString());
-
-            // Start Restart Checker Task
-            new RestartChecker();
-
+            
 
             Alt.Core.RegisterCustomCommands();
             Console.WriteLine("TerraTex Server started");
@@ -39,7 +41,25 @@ namespace TerraTex_RolePlay_AltV_Server
 
             await Scheduler();
 
+            // Start Restart Checker Task
+            RestartChecker.Init();
             DatabaseSaveJob.Init();
+
+
+
+            NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+            Logger.Trace("Trace");
+           
+            Logger.Info("Info");
+            Logger.Debug("Debug");
+            Logger.Error("Error");
+            Logger.Fatal("Fatal");
+            Logger.Warn("Warn");
+        }
+
+        private void ConfigureLogger()
+        {
+            
         }
 
         private async Task<bool> Scheduler()

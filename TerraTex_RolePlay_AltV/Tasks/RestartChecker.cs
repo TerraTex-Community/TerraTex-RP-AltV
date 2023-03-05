@@ -1,31 +1,41 @@
 ﻿using System.Timers;
 using AltV.Net;
+using Quartz;
 
 namespace TerraTex_RolePlay_AltV_Server.Tasks;
 
-public class RestartChecker: IDisposable
+public class RestartChecker: IJob
 {
-    private System.Timers.Timer _timer;
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-    public RestartChecker()
+    public static async void Init()
     {
-        _timer = new System.Timers.Timer();
-        _timer.Interval = 5000;
-        _timer.Elapsed += TimerOnElapsed;
-        _timer.Start();
+        IJobDetail job = JobBuilder.Create<RestartChecker>()
+            .WithIdentity("restart_checker", "restart_checker")
+            .Build();
+
+        // Trigger the job to run now, and then repeat every 10 seconds
+        ITrigger trigger = TriggerBuilder.Create()
+            .WithIdentity("restart_checker_trigger", "restart_checker")
+            .StartNow()
+            .WithSimpleSchedule(x => x
+                .WithIntervalInSeconds(5)
+                .RepeatForever())
+            .Build();
+
+        await Globals.Scheduler!.ScheduleJob(job, trigger);
     }
 
-    private void TimerOnElapsed(object? sender, ElapsedEventArgs e)
+    public Task Execute(IJobExecutionContext context)
     {
         if (File.Exists("stop.command"))
         {
-            Console.WriteLine("Found Stop Command ... Start Server Shutdown");
+            Logger.Info("Found Stop Command ... Start Server Shutdown");
+            // Console.WriteLine("Found Stop Command ... Start Server Shutdown");
             Alt.Core.StopServer();
         }
+
+        return Task.CompletedTask;
     }
 
-    public void Dispose()
-    {
-        _timer.Stop();
-    }
 }

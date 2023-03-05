@@ -20,7 +20,7 @@ public class DatabaseSaveJob: IJob
         // Trigger the job to run now, and then repeat every 10 seconds
         ITrigger trigger = TriggerBuilder.Create()
             .WithIdentity("database_save_trigger", "database_save")
-            .StartNow()
+            .StartAt(DateTimeOffset.UtcNow.AddMinutes(5))
             .WithSimpleSchedule(x => x
                 .WithIntervalInMinutes(10)
                 .RepeatForever())

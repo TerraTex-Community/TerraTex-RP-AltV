@@ -33,7 +33,7 @@ public class PlayerConnect : IScript
     }
 
     [ScriptEvent(ScriptEventType.PlayerBeforeConnect)]
-    public string OnPlayerBeforeConnect(PlayerConnectionInfo connectionInfo, string reason)
+    public string? OnPlayerBeforeConnect(PlayerConnectionInfo connectionInfo, string reason)
     {
 
         // stuff to check a ban:

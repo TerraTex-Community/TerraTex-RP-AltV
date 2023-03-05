@@ -17,15 +17,15 @@ public class Registration : IScript
         RegistrationData data = JsonSerializer.Deserialize<RegistrationData>(jsonRegistrationData)!;
 
         string salt = PasswordHelper.GenerateSalt();
-        string password = PasswordHelper.Hash(data.Password, salt);
+        string password = PasswordHelper.Hash(data.Password!, salt);
 
         var userEntity = new Database.Entities.User
         {
             BirthDay = data.Birthday,
-            Email = data.Email,
-            Forename = data.Forename,
-            Lastname = data.Lastname,
-            Gender = data.Gender,
+            Email = data.Email!,
+            Forename = data.Forename!,
+            Lastname = data.Lastname!,
+            Gender = data.Gender!,
             Nickname = player.Name,
             Salt = salt,
             Password = password

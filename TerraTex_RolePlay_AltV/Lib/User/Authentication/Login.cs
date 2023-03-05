@@ -54,7 +54,7 @@ public class Login : IScript
     {
         Database.Entities.User? user = await Globals.TTDatabase!.Users.Where(user => user.Nickname == player.Name).FirstOrDefaultAsync();
 
-        if (PasswordHelper.Hash(passwordTry, user.Salt) == user.Password)
+        if (PasswordHelper.Hash(passwordTry, user!.Salt) == user.Password)
         {
             // Save Last connection data - will be used for bans or auto login later
             user.LastHardwareIdExHash = player.HardwareIdExHash;
