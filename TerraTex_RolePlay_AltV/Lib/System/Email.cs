@@ -10,13 +10,13 @@ namespace TerraTex_RolePlay_AltV_Server.Lib.System;
 public class Email
 {
     public bool Enabled { get; }
-    public string Host { get; }
+    public string? Host { get; }
     public int Port { get; }
-    public string User { get; }
-    private string Password { get; }
+    public string? User { get; }
+    private string? Password { get; }
     public bool EnableSsl { get; }
-    public string FromEmail { get; }
-    public string FromName { get; }
+    public string? FromEmail { get; }
+    public string? FromName { get; }
     public string Subject { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
     public string ToEmail { get; set; } = string.Empty;
@@ -45,14 +45,14 @@ public class Email
         }
     }
 
-    public async void Send()
+    public void Send()
     {
         if (Enabled)
         {
             SmtpClient client = new SmtpClient
             {
                 Port = Port,
-                Host = Host,
+                Host = Host!,
                 EnableSsl = EnableSsl,
                 Timeout = 30000,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -61,7 +61,7 @@ public class Email
             };
 
             MailMessage mm =
-                new MailMessage(new MailAddress(FromEmail, FromName), new MailAddress(ToEmail))
+                new MailMessage(new MailAddress(FromEmail!, FromName), new MailAddress(ToEmail))
                 {
                     Subject = Subject,
                     Body = Text,

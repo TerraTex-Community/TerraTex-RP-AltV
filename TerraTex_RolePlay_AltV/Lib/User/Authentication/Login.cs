@@ -78,7 +78,7 @@ public class Login : IScript
         }
     }
 
-    private async void ProcessLogin(TTPlayer player)
+    private void ProcessLogin(TTPlayer player)
     {
         // load additional data here
 
