@@ -31,19 +31,4 @@ public class PlayerConnect : IScript
 
         return $"{firstPart}@{parts[1]}";
     }
-
-    [ScriptEvent(ScriptEventType.PlayerBeforeConnect)]
-    public string? OnPlayerBeforeConnect(PlayerConnectionInfo connectionInfo, string reason)
-    {
-
-        // stuff to check a ban:
-        // connectionInfo.HwidExHash
-        // connectionInfo.SocialId
-        // connectionInfo.HwidHash
-
-        // ...
-        // null to allow the connection
-        return null;
-    }
-
 }

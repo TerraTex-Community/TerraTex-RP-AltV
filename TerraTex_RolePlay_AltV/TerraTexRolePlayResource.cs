@@ -44,22 +44,7 @@ namespace TerraTex_RolePlay_AltV_Server
             // Start Restart Checker Task
             RestartChecker.Init();
             DatabaseSaveJob.Init();
-
-
-
-            NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-            Logger.Trace("Trace");
-           
-            Logger.Info("Info");
-            Logger.Debug("Debug");
-            Logger.Error("Error");
-            Logger.Fatal("Fatal");
-            Logger.Warn("Warn");
-        }
-
-        private void ConfigureLogger()
-        {
-            
+            DailyAutomaticShutdown.Init();
         }
 
         private async Task<bool> Scheduler()
@@ -75,14 +60,18 @@ namespace TerraTex_RolePlay_AltV_Server
 
         public override async void OnStop()
         {
-            
-            await Globals.Scheduler!.Shutdown();
-            await Globals.TTDatabase!.SaveChangesAsync(true);
+            var logger = NLog.LogManager.GetCurrentClassLogger();
+            logger.Info("Start stopping Resource TerraTex");
 
-            Console.WriteLine("TerraTex Server Stopped");
+            await Globals.Scheduler!.Shutdown();
+            logger.Info("Scheduler Stopped");
+            await Globals.TTDatabase!.SaveChangesAsync(true);
+            logger.Info("Changed Data stored");
 
             File.Delete("pid.txt");
             File.Delete("stop.command");
+
+            logger.Info("Resource Stopped completely");
         }
 
         public override IEntityFactory<IPlayer> GetPlayerFactory()
