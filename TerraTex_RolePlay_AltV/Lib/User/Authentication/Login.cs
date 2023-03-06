@@ -11,6 +11,8 @@ namespace TerraTex_RolePlay_AltV_Server.Lib.User.Authentication;
 
 public class Login : IScript
 {
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
     Login()
     {
         Alt.OnClient<TTPlayer, string>("login:submit", SubmitLogin);
@@ -26,8 +28,6 @@ public class Login : IScript
         {
             string salt = PasswordHelper.GenerateSalt();
             string passwordHash = PasswordHelper.Hash(password, salt);
-
-            // @FIXME: DbUser is not valid here as it is only set AFTER Login
 
             dbUser!.Salt = salt;
             dbUser.Password = passwordHash;
@@ -69,7 +69,7 @@ public class Login : IScript
             await Globals.TTDatabase!.SaveChangesAsync();
             player.Emit("login:result", true);
 
-            Console.WriteLine($"Account {player.Name} ({player.DbUser.Id}) logged in.");
+            Logger.Info($"Account {player.Name} ({player.DbUser.Id}) logged in.");
             ProcessLogin(player);
         }
         else

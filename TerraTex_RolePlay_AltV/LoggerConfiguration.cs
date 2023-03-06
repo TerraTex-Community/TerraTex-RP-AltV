@@ -12,7 +12,6 @@ static class LoggerConfiguration
         var config = new NLog.Config.LoggingConfiguration();
         
         // Rules for mapping loggers to targets            
-        // config.AddRule(LogLevel.Info, LogLevel.Fatal, logConsole);
         config.AddRule(LogLevel.Info, LogLevel.Fatal, GetConsoleTarget());
         config.AddRule(LogLevel.Debug, LogLevel.Fatal, GetFileLogger());
         config.AddRule(LogLevel.Debug, LogLevel.Fatal, GetJsonLogger());

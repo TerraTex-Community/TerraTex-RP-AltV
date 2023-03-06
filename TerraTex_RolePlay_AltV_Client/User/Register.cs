@@ -8,7 +8,7 @@ namespace TerraTex_RolePlay_AltV_Client.User;
 [TerraTexClientInit()]
 public class Login
 {
-    private IWebView view;
+    private IWebView? _view;
 
     public Login()
     {
@@ -18,31 +18,31 @@ public class Login
 
     private void CreateRegistrationWindow()
     {
-        view = Alt.CreateWebView(
+        _view = Alt.CreateWebView(
             url: "http://resource/client/html/index.html#/register"
         );
         
         Alt.GameControlsEnabled = false;
         Alt.Core.ShowCursor(true);
 
-        view.Visible = true;
-        view.Focused = true;
-        view.Focus();
+        _view.Visible = true;
+        _view.Focused = true;
+        _view.Focus();
 
-        view.On("register:ready", SendNickname);
-        view.On<string>("register:submit", SubmitRegistration);
+        _view.On("register:ready", SendNickname);
+        _view.On<string>("register:submit", SubmitRegistration);
     }
 
     private void SubmitRegistration(string obj)
     {
-        view.Unfocus();
-        view.Visible = false;
-        view.Remove();
+        _view!.Unfocus();
+        _view!.Visible = false;
+        _view!.Remove();
         Alt.EmitServer("register:submit", obj);
     }
 
     private void SendNickname()
     {
-        view.Emit("register:nickname", Alt.LocalPlayer.Name);
+        _view!.Emit("register:nickname", Alt.LocalPlayer.Name);
     }
 }

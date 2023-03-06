@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Reflection.Emit;
+using System.Threading;
 using AltV.Net;
 using AltV.Net.Async;
 using AltV.Net.Elements.Entities;
@@ -14,13 +15,13 @@ using Quartz;
 using Quartz.Impl;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Database;
+using TerraTex_RolePlay_AltV_Server.Lib.System.ConsoleInput;
 using TerraTex_RolePlay_AltV_Server.Tasks;
 
 namespace TerraTex_RolePlay_AltV_Server
 {
     public class TerraTexRolePlayResource: AsyncResource
     {
-
         public override async void OnStart()
         {
             LoggerConfiguration.ConfigureLogger();
@@ -46,6 +47,7 @@ namespace TerraTex_RolePlay_AltV_Server
             DatabaseSaveJob.Init();
             DailyAutomaticShutdown.Init();
         }
+
 
         private async Task<bool> Scheduler()
         {

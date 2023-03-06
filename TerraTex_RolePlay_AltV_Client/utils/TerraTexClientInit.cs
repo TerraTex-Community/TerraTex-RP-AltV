@@ -7,13 +7,13 @@ public class TerraTexClientInit : Attribute
 
     public static void RunInitFunctions()
     {
-        AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+        AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad!;
 
         var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly =>
         {
             try
             {
-                return assembly.GetTypes().Where(type => type.GetCustomAttributes(typeof(TerraTexClientInit), false).Count() > 0);
+                return assembly.GetTypes().Where(type => type.GetCustomAttributes(typeof(TerraTexClientInit), false).Any());
             }
             catch
             {

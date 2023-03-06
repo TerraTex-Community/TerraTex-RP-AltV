@@ -7,6 +7,8 @@ namespace TerraTex_RolePlay_AltV_Server.Lib.User.Authentication;
 
 public class Registration : IScript
 {
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
     Registration()
     {
         Alt.OnClient<IPlayer, string>("register:submit", SubmitRegistration);
@@ -34,7 +36,7 @@ public class Registration : IScript
         var resultEntityEntry = await Globals.TTDatabase!.Users.AddAsync(userEntity);
         await Globals.TTDatabase!.SaveChangesAsync();
 
-        Console.WriteLine($"New Account {player.Name} Id {resultEntityEntry.Entity.Id} created");
+        Logger.Info($"New Account {player.Name} Id {resultEntityEntry.Entity.Id} created");
 
         player.Emit("Connect:Login");
     }

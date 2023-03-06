@@ -8,9 +8,9 @@ namespace TerraTex_RolePlay_AltV_Client.User;
 [TerraTexClientInit()]
 public class Register
 {
-    private IWebView _view;
+    private IWebView? _view;
 
-    private string _maskedEmail;
+    private string? _maskedEmail;
 
     public Register()
     {
@@ -48,7 +48,7 @@ public class Register
 
     private void ReceivePasswordForgottenResult(bool result)
     {
-        _view.Emit("login:passwordForgottenResult", result);
+        _view!.Emit("login:passwordForgottenResult", result);
     }
 
     private void SendConfirmCode()
@@ -63,7 +63,7 @@ public class Register
 
     private void GetMaskedEmail()
     {
-        _view.Emit("login:email", _maskedEmail);
+        _view!.Emit("login:email", _maskedEmail);
     }
 
     private void ReceiveLoginResult(bool result)
@@ -72,13 +72,13 @@ public class Register
         {
             Alt.GameControlsEnabled = true;
             Alt.Core.ShowCursor(false);
-            _view.Unfocus();
+            _view!.Unfocus();
             _view.Visible = false;
             _view.Remove();
         }
         else
         {
-            _view.Emit("login:error");
+            _view!.Emit("login:error");
         }
     }
 
@@ -90,6 +90,6 @@ public class Register
     private void SendNickname()
     {
         // @todo: set is dev server in future 
-        _view.Emit("login:nickname", Alt.LocalPlayer.Name);
+        _view!.Emit("login:nickname", Alt.LocalPlayer.Name);
     }
 }

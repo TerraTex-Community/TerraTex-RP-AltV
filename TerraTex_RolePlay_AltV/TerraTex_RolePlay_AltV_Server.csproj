@@ -29,7 +29,7 @@
   <ItemGroup>
     <Folder Include="CustomFactories\" />
     <Folder Include="Database\Entities\" />
-    <Folder Include="Lib\System\" />
+    <Folder Include="Lib\Admin\" />
     <Folder Include="Migrations\" />
     <Folder Include="Helper\" />
     <Folder Include="Utils\JsonConverter\" />
