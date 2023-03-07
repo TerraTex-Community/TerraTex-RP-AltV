@@ -20,9 +20,9 @@ namespace TerraTex_RolePlay_AltV_Client
         {
             Console.WriteLine("Try to load TerraTex Client side");
 
-            view = Alt.CreateWebView("http://resource/client/html/chat/index.html");
-            view.On("chatloaded", ChatLoaded);
-            view.On("chatmessage", (string msg) => ChatMessage(msg));
+            view = Alt.CreateWebView("http://resource/client/html/index.html#/Chat");
+            view.On("chat:loaded", ChatLoaded);
+            view.On("chat:message", (string msg) => ChatMessage(msg));
 
             Alt.OnServer("chat:message", (string? name, string msg) => PushMessage(name, msg));
             Alt.OnKeyUp += ChatKeyUp;
@@ -33,21 +33,19 @@ namespace TerraTex_RolePlay_AltV_Client
 
         private void ChatKeyUp(Key key)
         {
-            Console.WriteLine("Key Pressed: " + key);
-
             if (loaded)
             {
                 if (!opened && key == Key.T && Alt.GameControlsEnabled)
                 {
                     opened = true;
-                    view.Emit("openChat", false);
+                    view.Emit("chat:open", false);
                     Alt.GameControlsEnabled = false;
                     view.Focus();
                 }
                 else if (opened && key == Key.Escape)
                 {
                     opened = false;
-                    view.Emit("closeChat");
+                    view.Emit("chat:close");
                     Alt.GameControlsEnabled = true;
                     view.Unfocus();
                 }
@@ -78,11 +76,11 @@ namespace TerraTex_RolePlay_AltV_Client
         {
             if (!string.IsNullOrEmpty(name))
             {
-                view.Emit("addMessage", name, msg);
+                view.Emit("chat:addMessage", name, msg);
             }
             else
             {
-                view.Emit("addString", msg);
+                view.Emit("chat:addString", msg);
             }
         }
 

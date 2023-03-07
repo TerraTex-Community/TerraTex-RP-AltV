@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import "./Login.scss";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import {Alert, Button, FloatingLabel, Form} from "react-bootstrap";
-import {AltV} from "../services/alt.service";
+import {AltV} from "../../services/alt.service";
 import {useLocation, useNavigate} from "react-router";
 
 function Login() {

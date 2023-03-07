@@ -2,7 +2,7 @@ import "./PasswordForgotten.scss"
 import React, {useEffect} from "react";
 import {Alert, Button, FloatingLabel, Form} from "react-bootstrap";
 import {useNavigate} from "react-router";
-import {AltV} from "../services/alt.service";
+import {AltV} from "../../services/alt.service";
 
 function PasswordForgotten() {
     const [error, setError] = React.useState(null as null| string);
