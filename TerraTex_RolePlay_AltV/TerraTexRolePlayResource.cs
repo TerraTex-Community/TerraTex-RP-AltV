@@ -32,9 +32,10 @@ namespace TerraTex_RolePlay_AltV_Server
                 File.Delete("pid.txt");
             }
             await File.WriteAllTextAsync("pid.txt", currentProcess.Id.ToString());
-            
 
+            CustomCommandsSystem.Integration.Settings.Config.CommandDoesNotExistError = "Der Befehl existiert nicht.";
             Alt.Core.RegisterCustomCommands();
+            
             Console.WriteLine("TerraTex Server started");
 
             Globals.TTDatabase = new TerraTexDatabaseContext();

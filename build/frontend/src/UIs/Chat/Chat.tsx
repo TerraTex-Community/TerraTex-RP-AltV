@@ -38,6 +38,8 @@ class Chat extends React.Component {
 
         // @todo:
         // - Add Key Down and Up Listener
+        // - Input should be active and tab in on open
+        // - Add Scroll Listener (Picture Up and Down)
     }
 
     private scrollToBottom() {
