@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement, Ref} from "react";
 import "./Chat.scss";
 import {Form} from "react-bootstrap";
 import {AltV} from "../../services/alt.service";
@@ -8,14 +8,17 @@ class Chat extends React.Component {
         isInputActive: false,
         messages: [] as ReactElement[],
         inputValue: "",
-        inputHistory: [] as string[]
+        inputHistory: [] as string[],
+        inputReference: null as HTMLInputElement | null
     }
 
     componentDidMount() {
         AltV.emit("chat:loaded");
 
         AltV.on("chat:open", () => {
-            this.setState({isInputActive: true, inputValue: ""});
+            this.setState({isInputActive: true, inputValue: ""}, () => {
+                this.state.inputReference?.focus();
+            });
         });
         AltV.on("chat:close", () => {
             this.setState({isInputActive: false});
@@ -38,7 +41,6 @@ class Chat extends React.Component {
 
         // @todo:
         // - Add Key Down and Up Listener
-        // - Input should be active and tab in on open
         // - Add Scroll Listener (Picture Up and Down)
     }
 
@@ -85,6 +87,9 @@ class Chat extends React.Component {
                 <Form onSubmit={(event) => this.sendMessage(event)}>
                     <Form.Control
                         type="text"
+                        autoFocus={true}
+                        ref={(input: HTMLInputElement | null) => { this.state.inputReference = input; }}
+                        tabIndex={1}
                         value={this.state.inputValue}
                         onChange={(event) => {
                             this.setState({inputValue: event.target.value})
