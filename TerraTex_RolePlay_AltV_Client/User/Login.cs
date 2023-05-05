@@ -74,7 +74,7 @@ public class Register
             Alt.Core.ShowCursor(false);
             _view!.Unfocus();
             _view.Visible = false;
-            _view.Remove();
+            _view.Destroy();
         }
         else
         {

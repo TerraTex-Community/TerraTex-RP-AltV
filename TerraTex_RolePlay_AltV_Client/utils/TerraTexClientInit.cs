@@ -3,8 +3,6 @@
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
 public class TerraTexClientInit : Attribute
 {
-
-
     public static void RunInitFunctions()
     {
         AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad!;

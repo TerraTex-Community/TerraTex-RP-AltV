@@ -1,4 +1,6 @@
-﻿using AltV.Net.Elements.Entities;
+﻿using AltV.Net;
+using AltV.Net.Elements.Entities;
+using AltV.Net.Enums;
 using CustomCommandsSystem.Common.Attributes;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 
@@ -6,10 +8,37 @@ namespace TerraTex_RolePlay_AltV_Server.Chat;
 
 public class ChatCommands
 {
-    [CustomCommand("testcmd")]
-    public void TestCmd(TTPlayer player)
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+    //
+    // [CustomCommand("testcmd")]
+    // public void TestCmd(TTPlayer player)
+    // {
+    //     //Chat.BroadCast("Test Call: " + player.Name + " " + msg);
+    //     player.SendChatMessage("test");
+    // }
+
+    [CustomCommand("weather")]
+    public static void WeatherCmd(TTPlayer player, string name)
     {
-        //Chat.BroadCast("Test Call: " + player.Name + " " + msg);
-        player.SendChatMessage("test");
+        try
+        {
+            player.SendChatMessage($"test {name}");
+            bool type = Enum.TryParse<WeatherType>(name, out var parsed);
+
+            if (!type)
+            {
+                player.SendChatMessage("Error: Weather Type not found.");
+                return;
+            }
+
+            Alt.EmitAllClients("weather:set", name,
+                DateTime.Now.ToString("O"));
+
+            Logger.Info($"Set Weather by Admin: {parsed}", DateTime.Now.ToString("O"));
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e);
+        }
     }
 }

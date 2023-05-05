@@ -37,7 +37,7 @@ public class Login
     {
         _view!.Unfocus();
         _view!.Visible = false;
-        _view!.Remove();
+        _view!.Destroy();
         Alt.EmitServer("register:submit", obj);
     }
 

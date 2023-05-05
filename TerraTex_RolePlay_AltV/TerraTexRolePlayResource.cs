@@ -15,6 +15,7 @@ using Quartz;
 using Quartz.Impl;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Database;
+using TerraTex_RolePlay_AltV_Server.Lib.Environment.Weather;
 using TerraTex_RolePlay_AltV_Server.Lib.System.ConsoleInput;
 using TerraTex_RolePlay_AltV_Server.Tasks;
 
@@ -39,7 +40,7 @@ namespace TerraTex_RolePlay_AltV_Server
             Console.WriteLine("TerraTex Server started");
 
             Globals.TTDatabase = new TerraTexDatabaseContext();
-            Globals.TTDatabase.Database.Migrate();
+            await Globals.TTDatabase.Database.MigrateAsync();
 
             await Scheduler();
 
@@ -47,6 +48,10 @@ namespace TerraTex_RolePlay_AltV_Server
             RestartChecker.Init();
             DatabaseSaveJob.Init();
             DailyAutomaticShutdown.Init();
+
+            // additional stuff
+            //  @todo: allow scripts to selfregister for onServerStartUpFinish Event
+            Weather.Init();
         }
 
 
