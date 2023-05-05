@@ -64,9 +64,9 @@ public class Weather
         int oldCalcTime = oldMinutes + oldHours * 60;
         int newCalcTime = time.Hour * 60 + time.Minute;
 
-        if (Alt.MsPerGameMinute != 1000)
+        if (Alt.MsPerGameMinute != 60000)
         {
-            Alt.MsPerGameMinute = 1000;
+            Alt.MsPerGameMinute = 60000;
             Alt.Natives.SetClockDate(time.Day, time.Month, time.Year);
             Alt.Natives.SetClockTime(time.Hour, time.Minute, time.Second);
         }
