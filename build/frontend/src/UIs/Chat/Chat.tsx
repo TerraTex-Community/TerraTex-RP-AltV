@@ -42,6 +42,14 @@ class Chat extends React.Component {
         // @todo:
         // - Add Key Down and Up Listener
         // - Add Scroll Listener (Picture Up and Down)
+
+    }
+
+    private onKeyDown(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        if (event.key === "Tab") {
+            event.preventDefault();
+            event.stopPropagation();
+        }
     }
 
     private scrollToBottom() {
@@ -87,6 +95,7 @@ class Chat extends React.Component {
                 <Form onSubmit={(event) => this.sendMessage(event)}>
                     <Form.Control
                         type="text"
+                        onKeyDown={event => this.onKeyDown(event)}
                         autoFocus={true}
                         ref={(input: HTMLInputElement | null) => { this.state.inputReference = input; }}
                         tabIndex={1}
@@ -99,6 +108,8 @@ class Chat extends React.Component {
             </div>
         </div>;
     }
+
+
 }
 
 export default Chat;
