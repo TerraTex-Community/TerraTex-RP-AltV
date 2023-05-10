@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import "./Register.scss";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import {Button, Col, Form, Row} from "react-bootstrap";
-import {AltV} from "../services/alt.service";
+import {AltV} from "../../services/alt.service";
 
 function Register() {
     const [nickname, setNickname] = useState("placeholder");

@@ -1,21 +1,18 @@
 ﻿using System.Numerics;
 using AltV.Net.Client;
 using AltV.Net.Client.Elements.Interfaces;
-using TerraTex_RolePlay_AltV_Client.utils;
 
 namespace TerraTex_RolePlay_AltV_Client.User;
 
-[TerraTexClientInit()]
-public class Register
+public class Login
 {
     private IWebView? _view;
 
     private string? _maskedEmail;
 
-    public Register()
+    public Login()
     {
         Alt.OnServer<string>("Connect:Login", CreateLoginWindow);
-
     }
 
     private void CreateLoginWindow(string maskedEmail)
@@ -74,7 +71,7 @@ public class Register
             Alt.Core.ShowCursor(false);
             _view!.Unfocus();
             _view.Visible = false;
-            _view.Remove();
+            _view.Destroy();
         }
         else
         {

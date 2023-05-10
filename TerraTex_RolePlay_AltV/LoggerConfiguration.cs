@@ -24,7 +24,7 @@ static class LoggerConfiguration
     {
         return new ColoredConsoleTarget
         {
-            Layout = "${longdate}|${sequenceid}|${level:uppercase=true}|${logger}|${message}",
+            Layout = "${longdate}|${sequenceid}|${level:uppercase=true}|${logger}|${message:withexception=true}",
             UseDefaultRowHighlightingRules = false,
             RowHighlightingRules =
                 {
