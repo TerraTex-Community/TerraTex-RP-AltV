@@ -8,8 +8,11 @@ class Chat extends React.Component {
         isInputActive: false,
         messages: [] as ReactElement[],
         inputValue: "",
+        inputHistoryId: 0,
+        inputHistoryLastNotSendInputMessage: "",
         inputHistory: [] as string[],
-        inputReference: null as HTMLInputElement | null
+        inputReference: null as HTMLInputElement | null,
+        isScrollingEnabled: true
     }
 
     componentDidMount() {
@@ -46,25 +49,80 @@ class Chat extends React.Component {
     }
 
     private onKeyDown(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        if (event.key === "Tab") {
-            event.preventDefault();
-            event.stopPropagation();
+
+        switch(event.key) {
+            case "Tab":
+                event.preventDefault();
+                event.stopPropagation();
+                break;
+            case "ArrowUp":
+                if (this.state.inputHistoryId === 0) {
+                    this.setState( {inputHistoryLastNotSendInputMessage: this.state.inputValue});
+                }
+                this.state.inputHistoryId++;
+                if (this.state.inputHistoryId > this.state.inputHistory.length) {
+                    this.state.inputHistoryId = this.state.inputHistory.length;
+                }
+                if (this.state.inputHistoryId !== 0) {
+                    this.setState({
+                        inputHistoryId: this.state.inputHistoryId,
+                        inputValue: this.state.inputHistory[this.state.inputHistory.length - this.state.inputHistoryId]
+                    });
+                }
+                break;
+            case "ArrowDown":
+                if (event.ctrlKey) {
+                    if (this.state.inputHistoryId !== 0) {
+                        this.setState({
+                            inputValue: this.state.inputHistoryLastNotSendInputMessage,
+                            inputHistoryId: 0
+                        });
+                    }
+                } else {
+                    if (this.state.inputHistoryId !== 0) {
+                        this.state.inputHistoryId--;
+
+                        if (this.state.inputHistoryId > 0) {
+                            this.setState({
+                                inputHistoryId: this.state.inputHistoryId,
+                                inputValue: this.state.inputHistory[this.state.inputHistory.length - this.state.inputHistoryId]
+                            });
+                        } else {
+                            this.setState({
+                                inputValue: this.state.inputHistoryLastNotSendInputMessage,
+                                inputHistoryId: 0
+                            });
+                        }
+                    }
+                }
+                break;
+            case "PageUp":
+                // @todo: scroll up and disable scrolling
+                break;
+            case "PageDown":
+                // @todo: scroll down and disable scrolling
+                break;
+            case "End":
+                this.setState({
+                    isScrollingEnabled: true
+                }, this.scrollToBottom.bind(this));
+                break;
         }
     }
 
     private scrollToBottom() {
-        // @todo: check that scroll was on bottom before and scrolling is not disabled
-        // @todo: maybe only allow scrolling disabled if input is active
-        const element = document.querySelector(".msglist");
-        if (element) {
-            element.scrollTo({
-                left: 0,
-                top: element!.scrollHeight,
-                behavior: "smooth"
-            })
-        }
+        if (this.state.isScrollingEnabled) {
+            const element = document.querySelector(".msglist");
+            if (element) {
+                element.scrollTo({
+                    left: 0,
+                    top: element!.scrollHeight,
+                    behavior: "smooth"
+                })
+            }
 
-        this.checkOverflow();
+            this.checkOverflow();
+        }
     }
 
     private checkOverflow() {
