@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using AltV.Net;
+using TerraTex_RolePlay_AltV_Server.Chat;
 
 namespace TerraTex_RolePlay_AltV_Server.Lib.System.ConsoleInput;
 
@@ -28,7 +29,7 @@ public class ConsoleReader : IScript
             String txt = $"{name} {String.Join(" ", args)}";
             Logger.Info("Sending Message: [SERVER - INFORMATION]: " + txt);
             
-            Chat.Chat.BroadCastAlert(txt, Chat.Chat.AlertType.Info, header: "SERVER - INFORMATION");
+            Chat.Chat.BroadCastAlert(txt, AlertType.Info, header: "SERVER - INFORMATION");
 
         }
     }

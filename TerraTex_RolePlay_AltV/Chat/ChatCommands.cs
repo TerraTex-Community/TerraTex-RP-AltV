@@ -13,7 +13,7 @@ public class ChatCommands
     [CustomCommand("global")]
     public void GlobalChat(TTPlayer player, [CustomCommandRemainingText] string msg)
     {
-        Chat.BroadCast($"~#b6e7eb~[Global] {player.Name}: {msg}");
+        Chat.BroadcastChatMessage(player, msg, ChatTypes.Global);
         Logger.Info("[chat:msg:global] " + player.Name + ": " + msg);
     }
 

@@ -36,35 +36,39 @@ namespace TerraTex_RolePlay_AltV_Server.Chat
 
                 var pos = player.Position;
 
-                
-                Alt.EmitClients(PlayerHelper.GetPlayersNearPosition(pos, ChatDistance).ToArray(), "chat:message", player.Name, msg);
-
-                //Alt.EmitAllClients("chat:message", player.Name, msg);
+                SendChatMessage(PlayerHelper.GetPlayersNearPosition(pos, ChatDistance).ToArray(), player, msg);
             }
+        }
+
+        public static void SendChatMessage(IPlayer receiver, IPlayer sender, string msg, ChatTypes? type = null)
+        {
+            receiver.Emit("chat:message", sender.Name, msg,
+                type != null ? type.ToString() : null);
+        }
+
+        public static void SendChatMessage(IPlayer[] receiver, IPlayer sender, string msg, ChatTypes? type = null)
+        {
+            Alt.EmitClients(receiver, "chat:message", sender.Name, msg,
+                type != null ? type.ToString() : null);
+        }
+
+        public static void BroadcastChatMessage(IPlayer sender, string msg, ChatTypes? type = null)
+        {
+            Alt.EmitAllClients("chat:message", sender.Name, msg,
+                type != null ? type.ToString() : null);
         }
 
         // @todo: extend by message type or color?
         public static void Send(IPlayer player, string msg)
         {
-            Alt.EmitClients(new[] { player }, "chat:message", null, msg);
+            player.Emit("chat:message", null, msg);
         }
 
         public static void BroadCast(string msg)
         {
             Alt.EmitAllClients("chat:message", null, msg);
         }
-
-        public enum AlertType
-        {
-            Primary,
-            Secondary,
-            Success,
-            Danger,
-            Warning,
-            Info,
-            Light,
-            Dark
-        }
+        
 
         public static void SendAlert(IPlayer player, string msg, AlertType alertVariant, string? header = null,
             bool? dismissable = null)

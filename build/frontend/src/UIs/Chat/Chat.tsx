@@ -1,5 +1,6 @@
 import React, {ReactElement, Ref} from "react";
 import "./Chat.scss";
+import "./ChatTypes.scss";
 import {Alert, Form} from "react-bootstrap";
 import {AltV} from "../../services/alt.service";
 
@@ -39,8 +40,11 @@ class Chat extends React.Component {
                     () => this.scrollToBottom());
             }
         });
-        AltV.on("chat:addMessage", (name: string, message: string) => {
-            this.state.messages.push(<p><span className="messageName">{name}: </span><span className="messageContent">{message}</span></p>);
+        AltV.on("chat:addMessage", (name: string, message: string, type: string|null = "Normal") => {
+            if (type && type !== "Normal") {
+                name = `[${type}] ${name}`
+            }
+            this.state.messages.push(<p className={`chatType-${type}`}><span className="messageName">{name}: </span><span className="messageContent">{message}</span></p>);
             this.setState({messages: this.state.messages},
                 () => this.scrollToBottom());
         });
