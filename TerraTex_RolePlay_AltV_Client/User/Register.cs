@@ -1,16 +1,14 @@
 ﻿using System.Numerics;
 using AltV.Net.Client;
 using AltV.Net.Client.Elements.Interfaces;
-using TerraTex_RolePlay_AltV_Client.utils;
 
 namespace TerraTex_RolePlay_AltV_Client.User;
 
-[TerraTexClientInit()]
-public class Login
+public class Register
 {
     private IWebView? _view;
 
-    public Login()
+    public Register()
     {
         Alt.OnServer("Connect:Register", CreateRegistrationWindow);
 
@@ -35,6 +33,7 @@ public class Login
 
     private void SubmitRegistration(string obj)
     {
+        Alt.Core.ShowCursor(false);
         _view!.Unfocus();
         _view!.Visible = false;
         _view!.Destroy();

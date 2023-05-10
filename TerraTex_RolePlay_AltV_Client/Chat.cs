@@ -3,11 +3,9 @@ using AltV.Net;
 using AltV.Net.Client;
 using AltV.Net.Client.Elements.Data;
 using AltV.Net.Client.Elements.Interfaces;
-using TerraTex_RolePlay_AltV_Client.utils;
 
 namespace TerraTex_RolePlay_AltV_Client
 {
-    [TerraTexClientInit()]
     public class Chat
     {
         private IWebView view;
@@ -25,9 +23,15 @@ namespace TerraTex_RolePlay_AltV_Client
             view.On("chat:message", (string msg) => ChatMessage(msg));
 
             Alt.OnServer("chat:message", (string? name, string msg) => PushMessage(name, msg));
+            Alt.OnServer<string,string,string?,bool?>("chat:addAlert", SendAlert);
             Alt.OnKeyUp += ChatKeyUp;
 
             Console.WriteLine("TerraTex Client side loaded");
+        }
+
+        private void SendAlert(string msg, string variant, string? header = null, bool? dismissable = false)
+        {
+            view.Emit("chat:addAlert", msg, variant, header, dismissable);
         }
 
 

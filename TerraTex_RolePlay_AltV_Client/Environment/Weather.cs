@@ -1,12 +1,9 @@
 ﻿using AltV.Net.Client;
 using AltV.Net.Enums;
 using System.Globalization;
-using System.Runtime.Intrinsics.X86;
-using TerraTex_RolePlay_AltV_Client.utils;
 
 namespace TerraTex_RolePlay_AltV_Client.Environment;
 
-[TerraTexClientInit()]
 public class Weather
 {
     public Weather()

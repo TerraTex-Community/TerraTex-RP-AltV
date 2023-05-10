@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+   <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +16,6 @@
   <ItemGroup>
     <Folder Include="html\chat\" />
     <Folder Include="Environment\" />
-    <Folder Include="utils\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+   <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,11 +26,12 @@
     <PackageReference Include="Quartz" Version="3.6.2" />
     <PackageReference Include="Quartz.Serialization.Json" Version="3.6.2" />
   </ItemGroup>
+  
 
   <ItemGroup>
     <Folder Include="CustomFactories\" />
     <Folder Include="Database\Entities\" />
-    <Folder Include="Lib\Admin\" />
+    <Folder Include="Lib\Admin\Commands\" />
     <Folder Include="Lib\Helper\" />
     <Folder Include="Migrations\" />
     <Folder Include="Helper\" />

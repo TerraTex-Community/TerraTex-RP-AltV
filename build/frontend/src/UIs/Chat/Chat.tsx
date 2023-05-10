@@ -1,8 +1,7 @@
 import React, {ReactElement, Ref} from "react";
 import "./Chat.scss";
-import {Form} from "react-bootstrap";
+import {Alert, Form} from "react-bootstrap";
 import {AltV} from "../../services/alt.service";
-import { animateScroll as scroll, scroller } from 'react-scroll';
 
 class Chat extends React.Component {
     state = {
@@ -29,9 +28,16 @@ class Chat extends React.Component {
             this.setState({isInputActive: false});
         });
         AltV.on("chat:addString", (message: string) => {
-            this.state.messages.push(<p>{message}</p>);
-            this.setState({messages: this.state.messages},
-                () => this.scrollToBottom());
+            if (this.containsFormating(message)){
+                message = this.formatMsg(message);
+                this.state.messages.push(<p dangerouslySetInnerHTML={{__html: message}}></p>);
+                this.setState({messages: this.state.messages},
+                    () => this.scrollToBottom());
+            } else {
+                this.state.messages.push(<p>{message}</p>);
+                this.setState({messages: this.state.messages},
+                    () => this.scrollToBottom());
+            }
         });
         AltV.on("chat:addMessage", (name: string, message: string) => {
             this.state.messages.push(<p><span className="messageName">{name}: </span><span className="messageContent">{message}</span></p>);
@@ -43,6 +49,18 @@ class Chat extends React.Component {
             this.setState({messages: this.state.messages},
                 () => this.scrollToBottom());
         });
+        AltV.on("chat:addAlert", (msg: string, variant: string = "info", header: string|null = null, dismissable: boolean = false) => {
+            const ref = React.createRef<HTMLDivElement>();
+            this.state.messages.push(
+                <Alert className="m-1" variant={variant} dismissible={dismissable} ref={ref} onClose={() => {ref.current?.remove(); this.setState({messages: this.state.messages},
+                    () => this.scrollToBottom());}}>
+                    {header ? <Alert.Heading>{header}</Alert.Heading>: <></>}
+                    {msg}
+                </Alert>
+            );
+            this.setState({messages: this.state.messages},
+                () => this.scrollToBottom());
+        })
 
         window.addEventListener("scroll", this.checkOverflow);
         window.addEventListener("scrollend", this.checkOverflow);
@@ -182,16 +200,52 @@ class Chat extends React.Component {
         return false;
     }
 
+    colorFormattingDef: {[color:string]: string} = {
+        "~r~": "color: red",
+        "~w~": "color: white",
+        "~b~": "color: blue",
+        "~g~": "color: green",
+        "~p~": "color: purple",
+        "~y~": "color: yellow",
+        "~m~": "color: magenta",
+        "~o~": "color: orange",
+        "~c~": "color: grey",
+        "~u~": "color: black"
+    }
+    // special ~n~: new Line
+    // special ~(#[A-Za-z0-9]{3,6})~
+
+    private containsFormating(message: string) {
+        for (const key in this.colorFormattingDef) {
+            if (message.indexOf(key) !== -1) return true;
+        }
+        if (message.indexOf("~n~") !== -1) return true;
+        return /~(#[A-Za-z0-9]{3,6})~/gi.test(message);
+    }
+
+    private formatMsg(input: string) {
+
+        let output = input;
+        output = output.replace(/~n~/gi, "</br>");
+        for (const key in this.colorFormattingDef) {
+            output = output.replace(new RegExp(key, "gi"), `<span style="${this.colorFormattingDef[key]}">`);
+        }
+        output = output.replace(/~(#[A-Za-z0-9]{3,6})~/gi, '<span style="color:$1">');
+
+        console.log(output.search(/<span/));
+        return output;
+    }
+
     private sendMessage(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         AltV.emit("chat:message", this.state.inputValue);
         this.state.inputHistory.push(this.state.inputValue);
-        this.setState({isInputActive: false, inputValue: "", inputHistory: this.state.inputHistory});
+        this.setState({inputHistoryId: 0, isInputActive: false, inputValue: "", inputHistory: this.state.inputHistory});
     }
 
     render() {
         return <div className="ChatComponent">
-            <div className="msglist ps-2" id="MessageList">
+            <div className="msglist p-2" id="MessageList">
                 <div className="messages">
                     {this.state.messages}
                 </div>

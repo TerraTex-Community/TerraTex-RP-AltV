@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using AltV.Net;
 using AltV.Net.Elements.Entities;
+using TerraTex_RolePlay_AltV_Server.Database.Entities;
+using TerraTex_RolePlay_AltV_Server.Helper;
 using TerraTex_RolePlay_AltV_Server.Utils.Helper;
 
 namespace TerraTex_RolePlay_AltV_Server.Lib.User.Authentication;
@@ -38,7 +40,7 @@ public class Registration : IScript
 
         Logger.Info($"New Account {player.Name} Id {resultEntityEntry.Entity.Id} created");
 
-        player.Emit("Connect:Login");
+        player.Emit("Connect:Login", EmailHelper.MaskPlayerEmail(data.Email!));
     }
     
 }

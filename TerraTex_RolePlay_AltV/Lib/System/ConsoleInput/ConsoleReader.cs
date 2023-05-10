@@ -27,10 +27,8 @@ public class ConsoleReader : IScript
         {
             String txt = $"{name} {String.Join(" ", args)}";
             Logger.Info("Sending Message: [SERVER - INFORMATION]: " + txt);
-
-            // @todo: add sending as broadcast to all users
-            Chat.Chat.BroadCast("[SERVER - INFORMATION]: " + txt);
-            // TTRPG.Api.triggerClientEventForAll("addHtmlMessage", "<span style='font-weight: bold'>[SERVER-INFORMATION]: " + s + "</span>");
+            
+            Chat.Chat.BroadCastAlert(txt, Chat.Chat.AlertType.Info, header: "SERVER - INFORMATION");
 
         }
     }
