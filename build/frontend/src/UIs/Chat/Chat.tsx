@@ -2,6 +2,7 @@ import React, {ReactElement, Ref} from "react";
 import "./Chat.scss";
 import {Form} from "react-bootstrap";
 import {AltV} from "../../services/alt.service";
+import { animateScroll as scroll, scroller } from 'react-scroll';
 
 class Chat extends React.Component {
     state = {
@@ -12,7 +13,8 @@ class Chat extends React.Component {
         inputHistoryLastNotSendInputMessage: "",
         inputHistory: [] as string[],
         inputReference: null as HTMLInputElement | null,
-        isScrollingEnabled: true
+        isScrollingEnabled: true,
+        currentScrollPosition: 0
     }
 
     componentDidMount() {
@@ -42,10 +44,8 @@ class Chat extends React.Component {
                 () => this.scrollToBottom());
         });
 
-        // @todo:
-        // - Add Key Down and Up Listener
-        // - Add Scroll Listener (Picture Up and Down)
-
+        window.addEventListener("scroll", this.checkOverflow);
+        window.addEventListener("scrollend", this.checkOverflow);
     }
 
     private onKeyDown(event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
@@ -97,16 +97,51 @@ class Chat extends React.Component {
                 }
                 break;
             case "PageUp":
-                // @todo: scroll up and disable scrolling
+                if (this.state.isScrollingEnabled) {
+                    const element = document.querySelector(".msglist");
+                    this.setState({
+                        isScrollingEnabled: false,
+                        // currentScrollPosition: element!.scrollHeight
+                    }, this.scrollUp.bind(this))
+                } else {
+                    this.scrollUp();
+                }
                 break;
             case "PageDown":
-                // @todo: scroll down and disable scrolling
+                this.scrollDown();
                 break;
             case "End":
                 this.setState({
                     isScrollingEnabled: true
                 }, this.scrollToBottom.bind(this));
                 break;
+        }
+    }
+
+    scrollUp() {
+        const element = document.querySelector(".msglist");
+
+        if (element) {
+            element.scrollTo({
+                left: 0,
+                // top: element.scrollTop - 10,
+                top: element.scrollTop - 100,
+                behavior: "smooth"
+            });
+            setTimeout(this.checkOverflow.bind(this), 100);
+        }
+    }
+
+    scrollDown() {
+        const element = document.querySelector(".msglist");
+
+        if (element) {
+            element.scrollTo({
+                left: 0,
+                top: element.scrollTop + 100,
+                behavior: "smooth"
+            });
+            setTimeout(this.checkOverflow.bind(this), 100);
         }
     }
 
@@ -121,7 +156,7 @@ class Chat extends React.Component {
                 })
             }
 
-            this.checkOverflow();
+            setTimeout(this.checkOverflow.bind(this), 100);
         }
     }
 
@@ -129,7 +164,19 @@ class Chat extends React.Component {
         const element = document.querySelector(".msglist");
         if (element) {
             if (element.scrollHeight > element.clientHeight) {
-                element.classList.add("overflow");
+                if (element.scrollTop > 10 || this.state.isScrollingEnabled) {
+                    element.classList.add("overflow-top");
+                } else {
+                    element.classList.remove("overflow-top");
+                }
+
+                const checkPos = element.clientHeight + element.scrollTop + 50;
+                if (checkPos < element.scrollHeight && !this.state.isScrollingEnabled) {
+                    element.classList.add("overflow-bottom");
+                } else {
+                    this.setState({isScrollingEnabled : true});
+                    element.classList.remove("overflow-bottom");
+                }
             }
         }
         return false;
@@ -144,7 +191,7 @@ class Chat extends React.Component {
 
     render() {
         return <div className="ChatComponent">
-            <div className="msglist ps-2">
+            <div className="msglist ps-2" id="MessageList">
                 <div className="messages">
                     {this.state.messages}
                 </div>
