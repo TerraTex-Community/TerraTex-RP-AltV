@@ -65,9 +65,13 @@ namespace TerraTex_RolePlay_AltV_Server
         private async Task<bool> Scheduler()
         {
             // init scheduler
-            Globals.Factory = new StdSchedulerFactory();
-            Globals.Scheduler = await Globals.Factory.GetScheduler();
+            // Globals.Factory = new StdSchedulerFactory();
+            var config = SchedulerBuilder.Create()
+                .UseTimeZoneConverter();
+            Globals.Factory = config.Build();
 
+            Globals.Scheduler = await Globals.Factory.GetScheduler();
+            
             await Globals.Scheduler.Start();
 
             return true;
