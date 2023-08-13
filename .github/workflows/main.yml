@@ -12,6 +12,6 @@ jobs:
       - uses: actions/checkout@v3.5.2
       - name: run build
         run: |        
-            echo ${{ secrets.FILE_CONTENT }} > prod_config
+            echo ${{ secrets.PROD_CONFIG }} > prod_config
             dotnet build -c Release
       
