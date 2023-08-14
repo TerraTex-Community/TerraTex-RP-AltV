@@ -9,9 +9,6 @@ namespace TerraTex_RolePlay_AltV_Server.Lib.Environment.Weather;
 
 public class Weather : IScript
 {
-
-    
-    // @todo: add admin command
     private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
     private WeatherDefinition _currentWeather;
     private WeatherDefinition _nextWeather;
@@ -34,7 +31,7 @@ public class Weather : IScript
         new WeatherDefinition(WeatherType.Thunder, WeatherType.Blizzard, 2, 10, "Gewitter", "Blizzard"),
         new WeatherDefinition(WeatherType.Clearing, WeatherType.Snow, 2, 8, "Nieselregen", "leichter Schneefall")
         // @Info what is with xmas? & Halloween?
-        // @todo: as bloom is way too have in winter and evening -> have to disable at nighttime?
+        // @todo: as bloom is way too high in winter and evening -> have to disable at nighttime?
     };
 
     public Weather()

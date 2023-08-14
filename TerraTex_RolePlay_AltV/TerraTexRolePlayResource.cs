@@ -5,6 +5,7 @@ using AltV.Net;
 using AltV.Net.Async;
 using AltV.Net.Elements.Entities;
 using AltV.Net.Shared.Elements.Data;
+using CustomCommandsSystem.Common.Enums;
 using CustomCommandsSystem.Integration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +39,13 @@ namespace TerraTex_RolePlay_AltV_Server
             }
             await File.WriteAllTextAsync("pid.txt", currentProcess.Id.ToString());
 
-            CustomCommandsSystem.Integration.Settings.Config.CommandDoesNotExistError = "Der Befehl existiert nicht.";
+            CustomCommandsSystem.Integration.Settings.Config.CommandDoesNotExistError = "~r~Der Befehl existiert nicht.";
+            CustomCommandsSystem.Integration.Settings.Config.CommandUsedIncorrectly = "~r~Der Befehl wurde nicht korrekt benutzt.";
+            CustomCommandsSystem.Integration.Settings.Config.PlayerNotFoundErrorMessage = "~r~Der Spieler konnte nicht gefunden werden.";
+            CustomCommandsSystem.Integration.Settings.Config.UsageOutputType = UsageOutputType.AllUsages;
+            CustomCommandsSystem.Integration.Settings.Config.MultipleUsagesOutputPrefix = "~r~Nutzung: ";
+            CustomCommandsSystem.Integration.Settings.Config.SingleUsageOutputPrefix = "~r~Nutzung: ";
+            
             Alt.Core.RegisterCustomCommands();
             
             Console.WriteLine("TerraTex Server started");
@@ -71,9 +78,13 @@ namespace TerraTex_RolePlay_AltV_Server
         private async Task<bool> Scheduler()
         {
             // init scheduler
-            Globals.Factory = new StdSchedulerFactory();
-            Globals.Scheduler = await Globals.Factory.GetScheduler();
+            // Globals.Factory = new StdSchedulerFactory();
+            var config = SchedulerBuilder.Create()
+                .UseTimeZoneConverter();
+            Globals.Factory = config.Build();
 
+            Globals.Scheduler = await Globals.Factory.GetScheduler();
+            
             await Globals.Scheduler.Start();
 
             return true;

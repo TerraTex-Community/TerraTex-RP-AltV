@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+   <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,12 +24,15 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.3" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageReference Include="Quartz" Version="3.7.0" />
+    <PackageReference Include="Quartz.Plugins.TimeZoneConverter" Version="3.6.2" />
     <PackageReference Include="Quartz.Serialization.Json" Version="3.7.0" />
   </ItemGroup>
+
 
   <ItemGroup>
     <Folder Include="CustomFactories\" />
     <Folder Include="Database\Entities\" />
+    <Folder Include="Lib\Admin\Commands\" />
     <Folder Include="Lib\Admin\" />
     <Folder Include="Lib\Helper\" />
     <Folder Include="Migrations\" />

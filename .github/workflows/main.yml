@@ -7,9 +7,9 @@ on:
 jobs:
   setup:
     name: Checkout
-    runs-on: tt-windows
+    runs-on: self-game
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.5.2
       - name: run build
         run: |        
             dotnet build -c Release

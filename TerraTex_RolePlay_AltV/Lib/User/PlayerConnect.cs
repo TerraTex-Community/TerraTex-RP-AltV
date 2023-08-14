@@ -2,6 +2,7 @@
 using AltV.Net.Data;
 using Microsoft.EntityFrameworkCore;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
+using TerraTex_RolePlay_AltV_Server.Helper;
 
 namespace TerraTex_RolePlay_AltV_Server.Lib.User;
 
@@ -19,16 +20,9 @@ public class PlayerConnect : IScript
         }
         else
         {
-            player.Emit("Connect:Login", MaskPlayerEmail(user.Email));
+            player.Emit("Connect:Login", EmailHelper.MaskPlayerEmail(user.Email));
         }
     }
 
-    private string MaskPlayerEmail(string email)
-    {
-        string[] parts = email.Split("@");
-
-        string firstPart = parts[0].Substring(0, 2) + "***" + parts[0].Substring(parts[0].Length - 2);
-
-        return $"{firstPart}@{parts[1]}";
-    }
+    
 }

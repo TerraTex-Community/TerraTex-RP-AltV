@@ -1,6 +1,7 @@
 ﻿using System.Security.Cryptography.X509Certificates;
 using AltV.Net;
 using Quartz;
+using TimeZoneConverter;
 
 namespace TerraTex_RolePlay_AltV_Server.Tasks;
 
@@ -20,7 +21,7 @@ public class DailyAutomaticShutdown: IJob
             .StartNow()
             .WithSchedule(
                 CronScheduleBuilder.DailyAtHourAndMinute(4,0)
-                    .InTimeZone(TimeZoneInfo.FindSystemTimeZoneById("Europe/Berlin"))
+                    .InTimeZone(TZConvert.GetTimeZoneInfo("Europe/Berlin"))
             )
             .Build();
 
