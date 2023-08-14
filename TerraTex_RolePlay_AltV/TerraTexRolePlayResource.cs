@@ -16,6 +16,7 @@ using Quartz.Impl;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Database;
 using TerraTex_RolePlay_AltV_Server.Lib.Environment.Weather;
+using TerraTex_RolePlay_AltV_Server.Lib.Helper;
 using TerraTex_RolePlay_AltV_Server.Lib.System.ConsoleInput;
 using TerraTex_RolePlay_AltV_Server.Tasks;
 
@@ -23,9 +24,12 @@ namespace TerraTex_RolePlay_AltV_Server
 {
     public class TerraTexRolePlayResource: AsyncResource
     {
+        private Logger? logger;
+
         public override async void OnStart()
         {
             LoggerConfiguration.ConfigureLogger();
+            logger = NLog.LogManager.GetCurrentClassLogger();
 
             Process currentProcess = Process.GetCurrentProcess();
             if (File.Exists("pid.txt"))
@@ -52,6 +56,15 @@ namespace TerraTex_RolePlay_AltV_Server
             // additional stuff
             //  @todo: allow scripts to selfregister for onServerStartUpFinish Event
             Weather.Init();
+
+            if (AdminHelper.IsDevelopmentServer())
+            {
+                logger.Info("Server started in >Development Mode<");
+            }
+            else
+            {
+                logger.Info("Server started in >Productive Mode<");
+            }
         }
 
 
@@ -68,8 +81,7 @@ namespace TerraTex_RolePlay_AltV_Server
 
         public override async void OnStop()
         {
-            var logger = NLog.LogManager.GetCurrentClassLogger();
-            logger.Info("Start stopping Resource TerraTex");
+            logger!.Info("Start stopping Resource TerraTex");
 
             await Globals.Scheduler!.Shutdown();
             logger.Info("Scheduler Stopped");

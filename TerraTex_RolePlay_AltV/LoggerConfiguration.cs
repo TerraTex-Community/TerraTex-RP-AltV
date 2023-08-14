@@ -78,6 +78,18 @@ static class LoggerConfiguration
                         Text = "TerraTex",
                         IgnoreCase = true,
                         ForegroundColor = ConsoleOutputColor.Green
+                    },
+                    new ConsoleWordHighlightingRule
+                    {
+                        Text = "Development Mode",
+                        IgnoreCase = true,
+                        ForegroundColor = ConsoleOutputColor.Red
+                    },
+                    new ConsoleWordHighlightingRule
+                    {
+                        Text = "Productive Mode",
+                        IgnoreCase = true,
+                        ForegroundColor = ConsoleOutputColor.Green
                     }
                 }
         };

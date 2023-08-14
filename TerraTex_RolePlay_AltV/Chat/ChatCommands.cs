@@ -3,6 +3,8 @@ using AltV.Net.Elements.Entities;
 using AltV.Net.Enums;
 using CustomCommandsSystem.Common.Attributes;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
+using TerraTex_RolePlay_AltV_Server.Lib.Helper;
+using TerraTex_RolePlay_AltV_Server.Utils.CommandAttributes;
 
 namespace TerraTex_RolePlay_AltV_Server.Chat;
 
@@ -18,6 +20,7 @@ public class ChatCommands
     // }
 
     [CustomCommand("weather")]
+    [HasAdminLevel(AdminLevel.Administrator)]
     public static void WeatherCmd(TTPlayer player, string name)
     {
         try
