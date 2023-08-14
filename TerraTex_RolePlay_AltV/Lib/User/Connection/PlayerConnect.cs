@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Helper;
 
-namespace TerraTex_RolePlay_AltV_Server.Lib.User;
+namespace TerraTex_RolePlay_AltV_Server.Lib.User.Connection;
 
 public class PlayerConnect : IScript
 {
@@ -24,5 +24,4 @@ public class PlayerConnect : IScript
         }
     }
 
-    
 }

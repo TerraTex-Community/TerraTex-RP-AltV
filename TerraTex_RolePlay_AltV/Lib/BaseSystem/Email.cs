@@ -1,11 +1,9 @@
 ﻿using System.Net;
-using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
 using System.Text;
-using System.Xml;
 using AltV.Net;
 
-namespace TerraTex_RolePlay_AltV_Server.Lib.System;
+namespace TerraTex_RolePlay_AltV_Server.Lib.BaseSystem;
 
 public class Email
 {

@@ -1,14 +1,11 @@
 {
   "profiles": {
-    "asd": {
-      "commandName": "Project",
-      "workingDirectory": "E:\\Development\\AltV\\TerraTex_RolePlay_AltV\\server",
-      "nativeDebugging": true
-    },
     "Profil \"1\"": {
       "commandName": "Executable",
       "executablePath": "E:\\Development\\AltV\\TerraTex_RolePlay_AltV\\server\\altv-server.exe",
-      "workingDirectory": "E:\\Development\\AltV\\TerraTex_RolePlay_AltV\\server"
+      "workingDirectory": "E:\\Development\\AltV\\TerraTex_RolePlay_AltV\\server",
+      "remoteDebugEnabled": false,
+      "nativeDebugging": true
     }
   }
 }

@@ -51,7 +51,8 @@ async function build() {
     });
 
 
-    // check if pid file exists and process is running
+    console.log("server_path: " + config.serverPath);
+    // check if pid file exists and @todo: process is running
     if (fs.existsSync(`${config.serverPath}/pid.txt`)) {
         await fs.promises.writeFile(`${config.serverPath}/stop.command`, "stopcmd");
 

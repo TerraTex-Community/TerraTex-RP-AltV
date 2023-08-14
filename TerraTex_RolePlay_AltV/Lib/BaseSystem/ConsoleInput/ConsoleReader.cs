@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 using System.Text;
-using System;
-using System.Diagnostics;
-using System.IO;
 using AltV.Net;
 using TerraTex_RolePlay_AltV_Server.Chat;
 
-namespace TerraTex_RolePlay_AltV_Server.Lib.System.ConsoleInput;
+namespace TerraTex_RolePlay_AltV_Server.Lib.BaseSystem.ConsoleInput;
 
 public class ConsoleReader : IScript
 {

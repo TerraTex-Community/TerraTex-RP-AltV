@@ -1,4 +1,4 @@
-﻿namespace TerraTex_RolePlay_AltV_Server.Lib.System.ConsoleInput;
+﻿namespace TerraTex_RolePlay_AltV_Server.Lib.BaseSystem.ConsoleInput;
 
 [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 public class ConsoleCommandAttribute : Attribute

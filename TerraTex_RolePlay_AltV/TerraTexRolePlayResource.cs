@@ -18,7 +18,7 @@ using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Database;
 using TerraTex_RolePlay_AltV_Server.Lib.Environment.Weather;
 using TerraTex_RolePlay_AltV_Server.Lib.Helper;
-using TerraTex_RolePlay_AltV_Server.Lib.System.ConsoleInput;
+using TerraTex_RolePlay_AltV_Server.Lib.User.Connection;
 using TerraTex_RolePlay_AltV_Server.Tasks;
 
 namespace TerraTex_RolePlay_AltV_Server
@@ -27,8 +27,14 @@ namespace TerraTex_RolePlay_AltV_Server
     {
         private Logger? logger;
 
+        public delegate void OnStartUpFinishedEventHandler();
+
+        // Declare the event.
+        public static event OnStartUpFinishedEventHandler? OnStartUpFinishedEvent;
+
         public override async void OnStart()
         {
+
             LoggerConfiguration.ConfigureLogger();
             logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -72,6 +78,9 @@ namespace TerraTex_RolePlay_AltV_Server
             {
                 logger.Info("Server started in >Productive Mode<");
             }
+
+            // GlobalEvents.InvokeStartUpFinished();
+            OnStartUpFinishedEvent?.Invoke();
         }
 
 

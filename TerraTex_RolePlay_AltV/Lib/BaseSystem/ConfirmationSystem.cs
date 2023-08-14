@@ -1,7 +1,7 @@
 ﻿using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Helper;
 
-namespace TerraTex_RolePlay_AltV_Server.Lib.System;
+namespace TerraTex_RolePlay_AltV_Server.Lib.BaseSystem;
 
 public class ConfirmationSystem
 {

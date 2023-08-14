@@ -2,7 +2,7 @@
 using System.Text;
 using AltV.Net.Elements.Entities;
 using NLog.Targets;
-using TerraTex_RolePlay_AltV_Server.Lib.System.ConsoleInput;
+using TerraTex_RolePlay_AltV_Server.Lib.BaseSystem.ConsoleInput;
 
 namespace TerraTex_RolePlay_AltV_Server.Lib.Admin;
 
