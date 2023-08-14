@@ -24,30 +24,4 @@ public class ChatCommands
         Chat.BroadcastChatMessage(player, msg, ChatTypes.Global);
         Logger.Info("[chat:msg:global] " + player.Name + ": " + msg);
     }
-
-    [CustomCommand("weather")]
-    [HasAdminLevel(AdminLevel.Administrator)]
-    public static void WeatherCmd(TTPlayer player, string name)
-    {
-        try
-        {
-            player.SendChatMessage($"test {name}");
-            bool type = Enum.TryParse<WeatherType>(name, out var parsed);
-
-            if (!type)
-            {
-                player.SendChatMessage("Error: Weather Type not found.");
-                return;
-            }
-
-            Alt.EmitAllClients("weather:set", name,
-                DateTime.Now.ToString("O"));
-
-            Logger.Info($"Set Weather by Admin: {parsed}", DateTime.Now.ToString("O"));
-        }
-        catch (Exception e)
-        {
-            Logger.Error(e);
-        }
-    }
 }

@@ -2,6 +2,8 @@
 using AltV.Net;
 using CustomCommandsSystem.Common.Attributes;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
+using TerraTex_RolePlay_AltV_Server.Lib.Helper;
+using TerraTex_RolePlay_AltV_Server.Utils.CommandAttributes;
 
 namespace TerraTex_RolePlay_AltV_Server.Lib.Admin.Commands;
 
@@ -9,13 +11,13 @@ public class Weather: IScript
 {
     private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
-    // @todo check for admin level
+
     [CustomCommand("weather")]
+    [HasAdminLevel(AdminLevel.Administrator)]
     public static void WeatherCmd(TTPlayer player, string name)
     {
         try
         {
-            player.SendChatMessage($"test {name}");
             bool type = Enum.TryParse<WeatherType>(name, out var parsed);
 
             if (!type)
