@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using TerraTex_RolePlay_AltV_Server.Lib.Helper;
 
 namespace TerraTex_RolePlay_AltV_Server.Database.Entities;
 
@@ -36,8 +37,8 @@ public class User : BaseEntity
     [Required]
     public string Gender { get; set; }
 
-    public int AdminLevel { get; set; } = 0;
-    public int DevLevel { get; set; } = 0;
+    public AdminLevel AdminLevel { get; set; } = AdminLevel.None;
+    public DeveloperLevel DevLevel { get; set; } = DeveloperLevel.None;
 
     public ulong? LastHardwareIdExHash { get; set; }
     public ulong? LastHardwareIdHash { get; set; }
