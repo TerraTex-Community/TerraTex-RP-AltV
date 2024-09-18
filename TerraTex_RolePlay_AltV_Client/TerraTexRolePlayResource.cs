@@ -19,6 +19,9 @@ namespace TerraTex_RolePlay_AltV_Client
             
             LoadingScreen.ShowDiscordLoadingScreen();
             
+            Alt.LoadDefaultIpls();
+            // @todo: load perico island
+            
             // Start with Skycam stuff
             // Alt.Natives.RenderScriptCams(false, false, 0, true, false, 0);
         }

@@ -4,6 +4,8 @@ using AltV.Net.Elements.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using System.Text.Json;
+using AltV.Net.Data;
+using AltV.Net.Enums;
 using NLog.Targets;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Lib.BaseSystem;
@@ -19,6 +21,20 @@ public class Login : IScript
     Login()
     {
         Alt.OnClient<TTPlayer, string>("Discord:Token", TokenDiscord);
+        Alt.OnClient<TTPlayer>("Connect:SelectedChar", SelectCharOption);
+    }
+
+    private void SelectCharOption(TTPlayer player)
+    {
+        // @todo: for testing purpose let's just spawn player
+        
+        player.Frozen = false;
+        player.Position = new Position(259.8162f, -1204.156f, 29.28907f);
+        player.Visible = true;
+        player.Model = (uint) PedModel.AnitaCutscene;
+        player.Dimension = 0;
+        
+        player.Emit("Connect:SpawnReady");
     }
 
     private async void TokenDiscord(TTPlayer user, string token)
@@ -48,6 +64,17 @@ public class Login : IScript
                 dbUserEntry.DiscordId = parsedResponse.id;
                 dbUserEntry.DiscordMFAEnabled = parsedResponse.mfa_enabled;
                 dbUserEntry.DiscordUsername = parsedResponse.username;
+
+                if (dbUserEntry.CreatedAt != null)
+                {
+                    if (dbUserEntry.LastHardwareIdExHash != user.HardwareIdExHash ||
+                        dbUserEntry.LastHardwareIdHash != user.HardwareIdHash ||
+                        dbUserEntry.LastSocialClubId != user.SocialClubId
+                       )
+                    {
+                        Console.WriteLine("Hardware Data changed.");
+                    }
+                }
                 
                 // hardware data @todo: do check here?
                 dbUserEntry.LastHardwareIdExHash = user.HardwareIdExHash;
@@ -64,6 +91,10 @@ public class Login : IScript
                 user.DbUser = dbUserEntry;
                 
                 Logger.Info($"Account {user.Name} ({user.DbUser!.Id}) connected.");
+                
+                // @todo: replace by Load Character Data and Stuff
+                
+                user.Emit("Connect:StartCharacterSelection");
                 
             }
             else
