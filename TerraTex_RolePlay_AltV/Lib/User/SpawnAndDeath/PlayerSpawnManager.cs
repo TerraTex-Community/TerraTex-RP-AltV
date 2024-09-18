@@ -20,14 +20,14 @@ public class PlayerSpawnManager : IScript
 
         // if (skin == 0)
         // {
-            if (player.DbUser!.Gender.Equals("male"))
-            {
-                player.Model = (uint) PedModel.Michael;
-            }
-            else
-            {
-                player.Model = (uint) PedModel.AnitaCutscene;
-            }
+            // if (player.DbUser!.Gender.Equals("male"))
+            // {
+            //     player.Model = (uint) PedModel.Michael;
+            // }
+            // else
+            // {
+            //     player.Model = (uint) PedModel.AnitaCutscene;
+            // }
         // }
         // else
         // {

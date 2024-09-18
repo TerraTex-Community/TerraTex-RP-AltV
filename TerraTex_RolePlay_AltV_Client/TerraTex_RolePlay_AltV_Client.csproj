@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AltV.Net.Client" Version="14.0.2" />
-    <PackageReference Include="AltV.Net.Shared" Version="14.0.2" />
+    <PackageReference Include="AltV.Net.Client" Version="16.2.4" />
+    <PackageReference Include="AltV.Net.Shared" Version="16.2.4" />
   </ItemGroup>
 
   <ItemGroup>

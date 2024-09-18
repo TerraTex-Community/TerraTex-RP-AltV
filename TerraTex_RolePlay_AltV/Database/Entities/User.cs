@@ -8,8 +8,6 @@ namespace TerraTex_RolePlay_AltV_Server.Database.Entities;
 
 #pragma warning disable CS8618 // Ein Non-Nullable-Feld muss beim Beenden des Konstruktors einen Wert ungleich NULL enthalten. Erwägen Sie die Deklaration als Nullable.
 
-[Index(nameof(Nickname), IsUnique = true)]
-[Index(nameof(Email), IsUnique = true)]
 [Index(nameof(UUID), IsUnique = true)]
 public class User : BaseEntity
 {
@@ -20,23 +18,15 @@ public class User : BaseEntity
     public string UUID { get; set; } = Guid.NewGuid().ToString();
 
     [Required]
-    public string Nickname { get; set; }
+    public string DiscordId { get; set; }
+    
+    [Required]
+    public bool DiscordMFAEnabled { get; set; }
+    
+    [Required]
+    public string DiscordUsername { get; set; }
 
-    [Required]
-    public string Password { get; set; }
-    [Required]
-    public string Email { get; set; }
-    [Required]
-    public string Forename { get; set; }
-    [Required]
-    public string Lastname { get; set; }
-    [Required]
-    public string Salt { get; set; }
-    [Required]
-    public DateOnly BirthDay { get; set; }
-    [Required]
-    public string Gender { get; set; }
-
+    //@todo: does this have to be moved to Character?
     public AdminLevel AdminLevel { get; set; } = AdminLevel.None;
     public DeveloperLevel DevLevel { get; set; } = DeveloperLevel.None;
 

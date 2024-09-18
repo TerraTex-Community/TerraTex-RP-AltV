@@ -1,7 +1,10 @@
-﻿using AltV.Net;
+﻿using System.Net.Http.Headers;
+using AltV.Net;
 using AltV.Net.Elements.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Text.Json;
+using NLog.Targets;
 using TerraTex_RolePlay_AltV_Server.CustomFactories;
 using TerraTex_RolePlay_AltV_Server.Lib.BaseSystem;
 using TerraTex_RolePlay_AltV_Server.Lib.User.SpawnAndDeath;
@@ -15,75 +18,79 @@ public class Login : IScript
 
     Login()
     {
-        Alt.OnClient<TTPlayer, string>("login:submit", SubmitLogin);
-        Alt.OnClient<TTPlayer>("login:sendConfirmationCode", SendConfirmationCode);
-        Alt.OnClient<TTPlayer, string, string>("login:TryChangePassword", ChangePassword);
+        Alt.OnClient<TTPlayer, string>("Discord:Token", TokenDiscord);
     }
 
-    private async void ChangePassword(TTPlayer user, string password, string code)
+    private async void TokenDiscord(TTPlayer user, string token)
     {
-        Database.Entities.User? dbUser = await Globals.TTDatabase!.Users.Where(dbUser => dbUser.Nickname == user.Name).FirstOrDefaultAsync();
-
-        if (ConfirmationSystem.CheckCodeAndRemoveOnSuccess(user, code))
+        try
         {
-            string salt = PasswordHelper.GenerateSalt();
-            string passwordHash = PasswordHelper.Hash(password, salt);
+            HttpClient client = new HttpClient();
+            // client.DefaultRequestHeaders.Add("Content-Type", "application/x-www-form-urlencoded");
+            // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue($"Bearer {token}");
+            // string response = await client.GetStringAsync("https://discordapp.com/api/users/@me");
 
-            dbUser!.Salt = salt;
-            dbUser.Password = passwordHash;
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://discordapp.com/api/users/@me");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            // request.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+            
+            HttpResponseMessage response = await client.SendAsync(request);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                var parsedResponse = JsonSerializer.Deserialize<DiscordApiResponse>(content)!;
+                Console.WriteLine(parsedResponse);
+                
+                Database.Entities.User? dbUserEntry = await Globals.TTDatabase!.Users.Where(dbUserEntry => dbUserEntry.DiscordId == parsedResponse.id).FirstOrDefaultAsync() ??
+                                                      new Database.Entities.User();
 
-            // @todo: is this needed after adding #31 ? do we need also to mark update? 
-            await Globals.TTDatabase!.SaveChangesAsync();
+                dbUserEntry.DiscordId = parsedResponse.id;
+                dbUserEntry.DiscordMFAEnabled = parsedResponse.mfa_enabled;
+                dbUserEntry.DiscordUsername = parsedResponse.username;
+                
+                // hardware data @todo: do check here?
+                dbUserEntry.LastHardwareIdExHash = user.HardwareIdExHash;
+                dbUserEntry.LastHardwareIdHash = user.HardwareIdHash;
+                dbUserEntry.LastIp = user.Ip;
+                dbUserEntry.LastSocialClubId = user.SocialClubId;
 
-            user.Emit("login:passwordForgottenResult", true);
+                if (dbUserEntry.CreatedAt == null)
+                {
+                    await Globals.TTDatabase!.AddAsync(dbUserEntry);
+                }
+                
+                await Globals.TTDatabase!.SaveChangesAsync();
+                user.DbUser = dbUserEntry;
+                
+                Logger.Info($"Account {user.Name} ({user.DbUser!.Id}) connected.");
+                
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+                user.Kick("Authorization failed");
+            }
+            
+
+            // Console.WriteLine(response);
+            // if (!request || !request.data || !request.data.id || !request.data.username) {
+            //     player.kick('Authorization failed');
+            //     return;
+            // }
+
         }
-        else
+        catch (Exception e)
         {
-            user.Emit("login:passwordForgottenResult", false);
+            Console.WriteLine(e);
         }
     }
+    
+}
 
-    private async void SendConfirmationCode(TTPlayer user)
-    {
-        Database.Entities.User? dbUser = await Globals.TTDatabase!.Users.Where(dbUser => dbUser.Nickname == user.Name).FirstOrDefaultAsync();
-
-        ConfirmationSystem.SendNewGeneratedKey(user, dbUser!.Email);
-    }
-
-    private async void SubmitLogin(TTPlayer player, string passwordTry)
-    {
-        Database.Entities.User? user = await Globals.TTDatabase!.Users.Where(user => user.Nickname == player.Name).FirstOrDefaultAsync();
-
-        if (PasswordHelper.Hash(passwordTry, user!.Salt) == user.Password)
-        {
-            // Save Last connection data - will be used for bans or auto login later
-            user.LastHardwareIdExHash = player.HardwareIdExHash;
-            user.LastHardwareIdHash = player.HardwareIdHash;
-            user.LastIp = player.Ip;
-            user.LastSocialClubId = player.SocialClubId;
-
-            // set db data on factory
-            player.DbUser = user;
-            player.LoggedIn = true;
-
-            await Globals.TTDatabase!.SaveChangesAsync();
-            player.Emit("login:result", true);
-
-            Logger.Info($"Account {player.Name} ({player.DbUser.Id}) logged in.");
-            ProcessLogin(player);
-        }
-        else
-        {
-            player.Emit("login:result", false);
-        }
-    }
-
-    private void ProcessLogin(TTPlayer player)
-    {
-        // load additional data here
-
-        // start after Login calculations
-        PlayerSpawnManager.SpawnPlayer(player);
-
-    }
+public class DiscordApiResponse
+{
+    public string id { get; set; }
+    public string username { get; set; }
+    public bool mfa_enabled { get; set; }
 }

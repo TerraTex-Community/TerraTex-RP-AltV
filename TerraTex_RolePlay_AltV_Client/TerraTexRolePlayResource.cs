@@ -16,8 +16,12 @@ namespace TerraTex_RolePlay_AltV_Client
         {
             RunInitFunctions();
             Console.WriteLine("TerraTex Client started");
+            
+            LoadingScreen.ShowDiscordLoadingScreen();
+            
+            // Start with Skycam stuff
+            // Alt.Natives.RenderScriptCams(false, false, 0, true, false, 0);
         }
-
 
         public override void OnStop()
         {
@@ -28,9 +32,10 @@ namespace TerraTex_RolePlay_AltV_Client
         private void RunInitFunctions()
         {
             new Weather();
-            new Login();
-            new Register();
-            new Chat();
+            new LoginByDiscord();
+            // new Login();
+            // new Register();
+            // new Chat();
         }
     }
 }

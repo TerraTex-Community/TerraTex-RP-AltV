@@ -3,6 +3,7 @@ using AltV.Net.Async;
 using AltV.Net.Types;
 using System;
 using System.Timers;
+using AltV.Net.Elements.Entities;
 
 namespace TerraTex_RolePlay_AltV_Server.Lib.User.Connection;
 
@@ -26,6 +27,8 @@ public class PlayerConnectionQueue: IScript
         connectTimer.Enabled = true;
         connectTimer.Start();
 
+        // Let's do it more dynamic in future by preloading stuff -> Next User should be loaded as soon previous is done
+        
         Logger.Info("Start User Connection Queue Interval");
     }
 

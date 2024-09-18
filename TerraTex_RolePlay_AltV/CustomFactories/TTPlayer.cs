@@ -10,7 +10,7 @@ public class TTPlayer: AsyncPlayer
     public bool LoggedIn { get; set; }
     public User? DbUser { get; set; }
 
-    public TTPlayer(ICore core, IntPtr nativePointer, ushort id) : base(core, nativePointer, id)
+    public TTPlayer(ICore core, IntPtr nativePointer, uint id) : base(core, nativePointer, id)
     {
         LoggedIn = false;
     }
@@ -23,7 +23,7 @@ public class TTPlayer: AsyncPlayer
 
 public class TTPlayerFactory : IEntityFactory<IPlayer>
 {
-    public IPlayer Create(ICore core, IntPtr playerPointer, ushort id)
+    public IPlayer Create(ICore core, IntPtr playerPointer, uint id)
     {
         return new TTPlayer(core, playerPointer, id);
     }

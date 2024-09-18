@@ -9,10 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="altV-CustomCommandsSystem" Version="1.3.7" />
-    <PackageReference Include="AltV.Net" Version="14.0.2" />
-    <PackageReference Include="AltV.Net.Async" Version="14.0.2" />
-    <PackageReference Include="AltV.Net.Shared" Version="14.0.2" />
+    <PackageReference Include="altV-CustomCommandsSystem" Version="1.3.8-rc" />
+    <PackageReference Include="AltV.Net" Version="16.2.4" />
+    <PackageReference Include="AltV.Net.Async" Version="16.2.4" />
+    <PackageReference Include="AltV.Net.Shared" Version="16.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-preview.3.23174.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0-preview.3.23174.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-preview.3.23174.2">
@@ -35,7 +35,6 @@
     <Folder Include="Lib\Admin\Commands\" />
     <Folder Include="Lib\Admin\" />
     <Folder Include="Lib\Helper\" />
-    <Folder Include="Migrations\" />
     <Folder Include="Helper\" />
     <Folder Include="Utils\JsonConverter\" />
     <Folder Include="Utils\Helper\" />

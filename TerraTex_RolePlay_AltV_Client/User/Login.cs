@@ -22,7 +22,6 @@ public class Login
         _view = Alt.CreateWebView(
             url: "http://resource/client/html/index.html#/login"
         );
-
         
         Alt.GameControlsEnabled = false;
         Alt.Core.ShowCursor(true);

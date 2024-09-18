@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TerraTex_RolePlay_AltV_Server.Database;
 
@@ -10,9 +11,11 @@ using TerraTex_RolePlay_AltV_Server.Database;
 namespace TerraTexRolePlayAltVServer.Migrations
 {
     [DbContext(typeof(TerraTexDatabaseContext))]
-    partial class TerraTexDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240918093536_AddBlogCreatedTimestamp")]
+    partial class AddBlogCreatedTimestamp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +45,8 @@ namespace TerraTexRolePlayAltVServer.Migrations
                     b.Property<bool>("DiscordMFAEnabled")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("DiscordUsername")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<bool>("DiscordUsername")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<ulong?>("LastHardwareIdExHash")
                         .HasColumnType("bigint unsigned");

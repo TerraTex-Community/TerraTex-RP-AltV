@@ -22,25 +22,25 @@ public class Registration : IScript
 
         string salt = PasswordHelper.GenerateSalt();
         string password = PasswordHelper.Hash(data.Password!, salt);
-
-        var userEntity = new Database.Entities.User
-        {
-            BirthDay = data.Birthday,
-            Email = data.Email!,
-            Forename = data.Forename!,
-            Lastname = data.Lastname!,
-            Gender = data.Gender!,
-            Nickname = player.Name,
-            Salt = salt,
-            Password = password
-        };
+        //
+        // var userEntity = new Database.Entities.User
+        // {
+        //     BirthDay = data.Birthday,
+        //     Email = data.Email!,
+        //     Forename = data.Forename!,
+        //     Lastname = data.Lastname!,
+        //     Gender = data.Gender!,
+        //     Nickname = player.Name,
+        //     Salt = salt,
+        //     Password = password
+        // };
         
-        var resultEntityEntry = await Globals.TTDatabase!.Users.AddAsync(userEntity);
-        await Globals.TTDatabase!.SaveChangesAsync();
-
-        Logger.Info($"New Account {player.Name} Id {resultEntityEntry.Entity.Id} created");
-
-        player.Emit("Connect:Login", EmailHelper.MaskPlayerEmail(data.Email!));
+        // var resultEntityEntry = await Globals.TTDatabase!.Users.AddAsync(userEntity);
+        // await Globals.TTDatabase!.SaveChangesAsync();
+        //
+        // Logger.Info($"New Account {player.Name} Id {resultEntityEntry.Entity.Id} created");
+        //
+        // player.Emit("Connect:Login", EmailHelper.MaskPlayerEmail(data.Email!));
     }
     
 }

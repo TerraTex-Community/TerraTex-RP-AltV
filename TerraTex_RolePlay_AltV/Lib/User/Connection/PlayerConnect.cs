@@ -12,16 +12,7 @@ public class PlayerConnect : IScript
     [ScriptEvent(ScriptEventType.PlayerConnect)]
     public async void OnPlayerConnected(TTPlayer player, string reason)
     {
-        Database.Entities.User? user = await Globals.TTDatabase!.Users.Where(user => user.Nickname == player.Name).FirstOrDefaultAsync();
-
-        if (user == null)
-        {
-            player.Emit("Connect:Register");
-        }
-        else
-        {
-            player.Emit("Connect:Login", EmailHelper.MaskPlayerEmail(user.Email));
-        }
+        player.Emit("Connect:LoginByDiscord");
     }
 
 }

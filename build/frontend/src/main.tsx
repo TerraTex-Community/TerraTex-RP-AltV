@@ -6,6 +6,7 @@ import Register from "./UIs/Authentication/Register";
 import Login from "./UIs/Authentication/Login";
 import PasswordForgotten from "./UIs/Authentication/PasswordForgotten";
 import Chat from "./UIs/Chat/Chat";
+import LoadingScreen from "./UIs/UtilPages/LoadingScreen";
 
 const router = createHashRouter([
     {
@@ -23,6 +24,10 @@ const router = createHashRouter([
     {
         path: "/Chat",
         element: <Chat />
+    },
+    {
+        path: "/LoadingScreen",
+        element: <LoadingScreen />
     }
 ]);
 
