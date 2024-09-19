@@ -68,8 +68,10 @@ async function build() {
     // // delete recursive old files
     const oldFilePath = `${config.serverPath}/resources/terratex-rp`;
     await fs.promises.rm(oldFilePath, { recursive: true, force: true });
+    await fs.promises.rm(`${config.serverPath}/resources/Additional_Resources`, { recursive: true, force: true });
     //
     const newFilePath = `${config.serverPath}/resources/terratex-rp`;
+    const resourcePath = `${config.serverPath}/resources/`
     // // create directory
     await fs.promises.mkdir(newFilePath);
     //
@@ -81,13 +83,13 @@ async function build() {
 
     copySync(`./../TerraTex_RolePlay_AltV\\bin\\${pathPart}\\net6.0`, `${newFilePath}/server`);
     copySync(`./../TerraTex_RolePlay_AltV_Client\\bin\\${pathPart}\\net6.0`, `${newFilePath}/client`);
-
+    copySync(`./../Additional_Resources`, `${resourcePath}/Additional_Resources`);
     copySync(`./frontend/dist`, `${newFilePath}/client/html`);
 
     if (wasStarted) {
         await fs.promises.writeFile(`${config.serverPath}/start.command`, "start");
     }
-
+    
     console.log("build finished");
 }
 

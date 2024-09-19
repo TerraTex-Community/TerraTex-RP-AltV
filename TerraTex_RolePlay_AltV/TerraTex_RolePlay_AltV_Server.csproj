@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="CustomFactories\" />
     <Folder Include="Database\Entities\" />
-    <Folder Include="Lib\Admin\Commands\" />
     <Folder Include="Lib\Admin\" />
     <Folder Include="Lib\Helper\" />
     <Folder Include="Helper\" />
