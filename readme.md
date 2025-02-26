@@ -1,3 +1,6 @@
+#Not Maintained
+As I do not work on this actively anymore - it is just like trying from time to time stuff. Made it public as future reference
+
 # Usefull Links
 - altV-CustomCommandsSystem: https://github.com/emre1702/altv-CustomCommandsSystem/wiki
 
